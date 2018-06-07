@@ -1107,14 +1107,19 @@ void VisualOdometry::optimizeMap()
 
     //    if ( match_2dkp_index_.size()<100 )
     //addMapPoints();
-    if ( map_->map_points_.size() > 200 &&map_point_erase_ratio_<0.85)
+    if ( map_->map_points_.size() > 600 )
     {
-        // TODO map is too large, remove some one
-        cout<<"map_point_erase_ratio_ : "<<map_point_erase_ratio_<<endl;
-        map_point_erase_ratio_ += 0.1;
+//        if(map_point_erase_ratio_<0.85)
+//        {
+            // TODO map is too large, remove some one
+            map_point_erase_ratio_ += (1.0-map_point_erase_ratio_)/4.0;
+//        }
     }
     else
-    {map_point_erase_ratio_ = 0.1;}
+    {
+        map_point_erase_ratio_ = map_point_erase_ratio_/1.5;
+    }
+    cout<<"map_point_erase_ratio_ : "<<map_point_erase_ratio_<<endl;
     cout<<"map points: "<<map_->map_points_.size()<<endl;
 }
 

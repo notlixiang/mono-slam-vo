@@ -121,7 +121,7 @@ int main ( int argc, char** argv )
         double pos_z=Twc.translation()(2);
 
         int draw_x = int(-pos_x*scale) + 400;
-        int draw_y = int(pos_z*scale) + 100;
+        int draw_y = int(pos_z*scale) + 400;
 
         cv::circle(traj, cv::Point(draw_x, draw_y), 1, CV_RGB(255, 0, 0), 2);
 
