@@ -766,7 +766,7 @@ cout<<"T2 : "<<endl<<T2<<endl;
         //        cout<<endl;
 
         //double d=T_c_w_estimated_.translation().norm();
-        double d=length3d( T_c_w_estimated_.translation()(0), T_c_w_estimated_.translation()(1), T_c_w_estimated_.translation()(2));
+        double d=length3d( T_c_w_estimated_.translation()(0)-ref_->T_c_w_.translation()(0), T_c_w_estimated_.translation()(1)-ref_->T_c_w_.translation()(1), T_c_w_estimated_.translation()(2)-ref_->T_c_w_.translation()(2));
 //        cout<<"l1 l2 d : "<<l1<<" "<<l2<<" "<<d<<endl;
         double angleRad=angleRadFromAcos(l1,l2,d);
 
@@ -788,16 +788,16 @@ cout<<"T2 : "<<endl<<T2<<endl;
         else
         {
 //            if(angleRad>min_view_angle_triangulation_&&error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
-            if((error_ref*error_cur/pow(angleRad,2.0))<max_mean_view_error_triangulation_*max_mean_view_error_triangulation_/pow(min_view_angle_triangulation_,2.0))
+            if((error_ref*error_cur/pow(sin(angleRad),3.2))<max_mean_view_error_triangulation_*max_mean_view_error_triangulation_/pow(min_view_angle_triangulation_,3.2))
             {
-                if(error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
+//                if(error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
                 {
                     tiangulation_points_good_[i]=true;
                     triangulation_point_angle_enough_num_++;
                 }
             }
         }
-        cout<<"mean_view_angle : "<<mean_view_angle<<" angleRad : "<<angleRad<<" error_ref : "<<error_ref<<" error_cur : "<<error_cur<<endl;
+        cout<<"mean_view_angle : "<<mean_view_angle<<" angleRad : "<<angleRad<<" error_ref : "<<error_ref<<" error_cur : "<<error_cur<<"l1 l2 d : "<<l1<<" "<<l2<<" "<<d<<endl;
         mean_view_angle=(mean_view_angle*i+angleRad )/(i+1);
         //cout<<" T_c_w_estimated_.translation()(0) "<<T_c_w_estimated_.translation()(0)<<" (1) "<<T_c_w_estimated_.translation()(1)<<" (2) "<<T_c_w_estimated_.translation()(2)<<endl;
         //cout<<" l1 "<<l1<<" l2 "<<l2<<" d "<<d<<endl;
@@ -833,7 +833,7 @@ bool VisualOdometry::checkEstimatedPose()
     Sophus::Vector6d d = T_r_c.log();
     cout<<"  inlier   : "<<num_inliers_<<endl;
     cout<<"  motion   : "<<d.norm() <<endl;
-    if ( d.norm() > 1.0+0.1*(num_lost_+1) )
+    if ( d.norm() > 1.5+0.5*(num_lost_+1) )
     {
         cout<<"reject because motion is too large: " <<endl;
         return false;
