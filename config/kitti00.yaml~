@@ -21,12 +21,12 @@ min_inliers_2d2d: 20
 min_good_matches: 30
 num_inliers_2d2d_ratio: 0.6
 min_view_angle_triangulation_init: 0.05
-min_view_angle_triangulation: 0.02
+min_view_angle_triangulation: 0.04
 max_init_frame_refresh_num: 100
 max_mean_view_error_triangulation: 0.01
-keyframe_rotation: 0.02
-keyframe_translation: 0.02
+keyframe_rotation: 0.01
+keyframe_translation: 0.01
 map_point_erase_ratio: 0.1
 min_triangulation_point_angle_enough_num: 30
 max_matching_distance: 30.0
-max_map_points:600
+max_map_points:200

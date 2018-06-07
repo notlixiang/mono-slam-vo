@@ -378,21 +378,21 @@ void VisualOdometry::featureMatching2d2d()
             }
         }
 
-        if(good_matches_2d2d_.size()<100)
-        {
-            match_2dkp_index_ref_.clear();
-            match_2dkp_index_curr_.clear();
-            good_matches_2d2d_.clear();
-            for ( cv::DMatch& m : matches )
-            {
-                if ( m.distance < max<float> ( min_dis*match_ratio_, max_matching_distance_*1.5 ) )
-                {
-                    good_matches_2d2d_.push_back(m);
-                    match_2dkp_index_ref_.push_back( m.queryIdx );
-                    match_2dkp_index_curr_.push_back( m.trainIdx );
-                }
-            }
-        }
+//        if(good_matches_2d2d_.size()<100)
+//        {
+//            match_2dkp_index_ref_.clear();
+//            match_2dkp_index_curr_.clear();
+//            good_matches_2d2d_.clear();
+//            for ( cv::DMatch& m : matches )
+//            {
+//                if ( m.distance < max<float> ( min_dis*match_ratio_, max_matching_distance_*1.5 ) )
+//                {
+//                    good_matches_2d2d_.push_back(m);
+//                    match_2dkp_index_ref_.push_back( m.queryIdx );
+//                    match_2dkp_index_curr_.push_back( m.trainIdx );
+//                }
+//            }
+//        }
     }
 
 //    Mat ShowMatches;
@@ -657,8 +657,8 @@ void VisualOdometry::triangulation()
               //            R[2,0], R[2,1], R[2,2], t[2,0]
               );
 
-cout<<"T1 : "<<endl<<T1<<endl;
-cout<<"T2 : "<<endl<<T2<<endl;
+//cout<<"T1 : "<<endl<<T1<<endl;
+//cout<<"T2 : "<<endl<<T2<<endl;
 
     Mat K = ( cv::Mat_<double> ( 3,3 ) <<
               ref_->camera_->fx_, 0, ref_->camera_->cx_,
@@ -702,7 +702,7 @@ cout<<"T2 : "<<endl<<T2<<endl;
     //    }
 
 
-    cout<<"points_ref.size() : "<<points_ref.size()<<endl;
+//    cout<<"points_ref.size() : "<<points_ref.size()<<endl;
     //调用opencv函数进行三角化
     Mat pts_4d;
     cv::triangulatePoints( T1, T2, points_ref, points_curr, pts_4d );
@@ -765,6 +765,9 @@ cout<<"T2 : "<<endl<<T2<<endl;
         //        cout<<"point reprojected from second frame: "<<pt2_trans.transpose()<<endl;
         //        cout<<endl;
 
+
+
+
         //double d=T_c_w_estimated_.translation().norm();
         double d=length3d( T_c_w_estimated_.translation()(0)-ref_->T_c_w_.translation()(0), T_c_w_estimated_.translation()(1)-ref_->T_c_w_.translation()(1), T_c_w_estimated_.translation()(2)-ref_->T_c_w_.translation()(2));
 //        cout<<"l1 l2 d : "<<l1<<" "<<l2<<" "<<d<<endl;
@@ -787,17 +790,22 @@ cout<<"T2 : "<<endl<<T2<<endl;
         }
         else
         {
-//            if(angleRad>min_view_angle_triangulation_&&error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
-            if((error_ref*error_cur/pow(sin(angleRad),3.2))<max_mean_view_error_triangulation_*max_mean_view_error_triangulation_/pow(min_view_angle_triangulation_,3.2))
+            if(l1>9.5||l2>9.5)
             {
-//                if(error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
+                continue;
+            }
+
+//            if(angleRad>min_view_angle_triangulation_&&error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
+            if((error_ref*error_cur/pow(angleRad,3.2))<max_mean_view_error_triangulation_*max_mean_view_error_triangulation_/pow(min_view_angle_triangulation_,3.2))
+            {
+                if(error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
                 {
                     tiangulation_points_good_[i]=true;
                     triangulation_point_angle_enough_num_++;
                 }
             }
         }
-        cout<<"mean_view_angle : "<<mean_view_angle<<" angleRad : "<<angleRad<<" error_ref : "<<error_ref<<" error_cur : "<<error_cur<<"l1 l2 d : "<<l1<<" "<<l2<<" "<<d<<endl;
+//        cout<<"mean_view_angle : "<<mean_view_angle<<" angleRad : "<<angleRad<<" error_ref : "<<error_ref<<" error_cur : "<<error_cur<<"l1 l2 d : "<<l1<<" "<<l2<<" "<<d<<endl;
         mean_view_angle=(mean_view_angle*i+angleRad )/(i+1);
         //cout<<" T_c_w_estimated_.translation()(0) "<<T_c_w_estimated_.translation()(0)<<" (1) "<<T_c_w_estimated_.translation()(1)<<" (2) "<<T_c_w_estimated_.translation()(2)<<endl;
         //cout<<" l1 "<<l1<<" l2 "<<l2<<" d "<<d<<endl;
@@ -810,9 +818,7 @@ cout<<"T2 : "<<endl<<T2<<endl;
     mean_view_error_ref_triangulation_=mean_error_ref;
     mean_view_error_cur_triangulation_=mean_error_cur;
     mean_view_angle_triangulation_=mean_view_angle;
-    cout<<"mean_error_ref  :  "<<mean_error_ref<<endl;
-    cout<<"mean_error_cur  :  "<<mean_error_cur<<endl;
-    cout<<"mean_view_angle  :   "<<mean_view_angle<<endl;
+    cout<<" mean_error_ref  :  "<<mean_error_ref<<" mean_error_cur  :  "<<mean_error_cur<<" mean_view_angle  :   "<<mean_view_angle<<endl;
     cout<<"triangulation_point_angle_enough_num_ : "<<triangulation_point_angle_enough_num_<<endl;
 
     //    points_ref.clear();
@@ -909,6 +915,7 @@ bool VisualOdometry::checkKeyFrame()
     {
         return true;
     }
+    cout<<"Not a keyframe"<<endl;
     return false;
 }
 
@@ -1010,6 +1017,8 @@ void VisualOdometry::addMapPointsTriangulation()
         //        vector<bool> matched2d2d(keypoints_curr_.size(), false);
         //        for ( int index:match_2dkp_index_curr_ )
         //            matched2d2d[index] = true;
+        int NewPointsNum=0;
+
         for ( int i=0; i<good_matches_2d2d_.size(); i++ )
         {
             //            if ( matched3d2d[i] == true )
@@ -1045,10 +1054,12 @@ void VisualOdometry::addMapPointsTriangulation()
                         //                    curr_->insertFramePoint(map_point);
                         ref_->insertFramePoint(map_point,keypoints_ref_[good_matches_2d2d_[i].queryIdx].pt);
                         curr_->insertFramePoint(map_point,keypoints_curr_[good_matches_2d2d_[i].trainIdx].pt);
+                        NewPointsNum++;
                     }
                 }
             }
         }
+    cout<<"NewPointsNum : "<<endl;
     }
 }
 
@@ -1127,15 +1138,15 @@ void VisualOdometry::optimizeMap()
     //addMapPoints();
     if ( map_->map_points_.size() > max_map_points_ )
     {
-//        if(map_point_erase_ratio_<0.85)
-//        {
+        if(map_point_erase_ratio_<0.75)
+        {
             // TODO map is too large, remove some one
-            map_point_erase_ratio_ += (1.0-map_point_erase_ratio_)/3.0;
-//        }
+            map_point_erase_ratio_ += (1.0-map_point_erase_ratio_)/4.0;
+        }
     }
     else
     {
-        if(map_point_erase_ratio_>0.5)
+        if(map_point_erase_ratio_>0.3)
         {
             map_point_erase_ratio_ = map_point_erase_ratio_/1.2;
         }
@@ -1155,7 +1166,7 @@ void VisualOdometry::globalBundleAdjustment()
 
     long unsigned int maxKFid = 0;
     long unsigned int minKFid = 999999;
-    int deltaf = 20;
+    int deltaf = 10;
 
     for(auto iter = map_->keyframes_.begin(); iter != map_->keyframes_.end();iter++)
     {

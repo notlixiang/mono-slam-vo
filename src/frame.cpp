@@ -87,7 +87,7 @@ bool Frame::isInFrame ( const Vector3d& pt_world )
     // cout<<"P_cam = "<<p_cam.transpose()<<endl;
     if ( p_cam(2,0)<0 )
     {
-        cout<<"p_cam(2,0) : "<<p_cam(2,0)<<endl;
+//        cout<<"p_cam(2,0) : "<<p_cam(2,0)<<endl;
         return false;}
     Vector2d pixel = camera_->world2pixel( pt_world, T_c_w_ );
     // cout<<"P_pixel = "<<pixel.transpose()<<endl<<endl;
