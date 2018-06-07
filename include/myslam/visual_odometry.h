@@ -102,6 +102,7 @@ public: // functions
     
     bool addFrame( Frame::Ptr frame );      // add a new frame
     int init_cnt_frame=0;
+    int max_map_points_;
 
 protected:  
     // inner operation
