@@ -1,1 +1,1 @@
-/home/null/slam/mono-from-rgbd-kitti-ba-newg2o/Thirdparty/g2o/build/CMakeFiles/g2o.dir
+/home/null/slam/mono-slam-git/mono-slam-vo/Thirdparty/g2o/build/CMakeFiles/g2o.dir

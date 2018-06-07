@@ -627,7 +627,7 @@ void VisualOdometry::poseEstimationPnP()
                 pose->estimate().rotation(),
                 pose->estimate().translation()
                 );
-    
+
     cout<<"T_c_w_estimated_: "<<endl<<T_c_w_estimated_.matrix()<<endl;
 }
 
@@ -1090,7 +1090,7 @@ void VisualOdometry::optimizeMap()
             continue;
         }
 
-        
+
         //        double angle = getViewAngle( curr_, iter->second );
         //        if ( angle > M_PI/6. )
         //        {
@@ -1104,7 +1104,7 @@ void VisualOdometry::optimizeMap()
         }
         iter++;
     }
-    
+
     //    if ( match_2dkp_index_.size()<100 )
     //addMapPoints();
     if ( map_->map_points_.size() > 200 &&map_point_erase_ratio_<0.85)
@@ -1129,7 +1129,7 @@ void VisualOdometry::globalBundleAdjustment()
 
     long unsigned int maxKFid = 0;
     long unsigned int minKFid = 999999;
-    int deltaf = 50;
+    int deltaf = 20;
 
     for(auto iter = map_->keyframes_.begin(); iter != map_->keyframes_.end();iter++)
     {

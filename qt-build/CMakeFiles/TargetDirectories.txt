@@ -1,9 +1,3 @@
-/home/null/slam/mono-slam-vo/mono-slam-vo/qt-build/CMakeFiles/edit_cache.dir
-/home/null/slam/mono-slam-vo/mono-slam-vo/qt-build/CMakeFiles/rebuild_cache.dir
-/home/null/slam/mono-slam-vo/mono-slam-vo/qt-build/src/CMakeFiles/edit_cache.dir
-/home/null/slam/mono-slam-vo/mono-slam-vo/qt-build/src/CMakeFiles/rebuild_cache.dir
-/home/null/slam/mono-slam-vo/mono-slam-vo/qt-build/src/CMakeFiles/myslam.dir
-/home/null/slam/mono-slam-vo/mono-slam-vo/qt-build/test/CMakeFiles/rebuild_cache.dir
-/home/null/slam/mono-slam-vo/mono-slam-vo/qt-build/test/CMakeFiles/gentxt.dir
-/home/null/slam/mono-slam-vo/mono-slam-vo/qt-build/test/CMakeFiles/edit_cache.dir
-/home/null/slam/mono-slam-vo/mono-slam-vo/qt-build/test/CMakeFiles/run_vo.dir
+/home/null/slam/mono-slam-git/mono-slam-vo/qt-build/test/CMakeFiles/gentxt.dir
+/home/null/slam/mono-slam-git/mono-slam-vo/qt-build/src/CMakeFiles/myslam.dir
+/home/null/slam/mono-slam-git/mono-slam-vo/qt-build/test/CMakeFiles/run_vo.dir
