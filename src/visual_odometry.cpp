@@ -1148,7 +1148,11 @@ void VisualOdometry::optimizeMap()
             continue;
         }
 
-
+        if ( match_ratio < 0.3 )
+        {
+            iter = map_->map_points_.erase(iter);
+            continue;
+        }
         //        double angle = getViewAngle( curr_, iter->second );
         //        if ( angle > M_PI/6. )
         //        {
@@ -1167,7 +1171,7 @@ void VisualOdometry::optimizeMap()
     //addMapPoints();
     if ( map_->map_points_.size() > max_map_points_ )
     {
-        if(map_point_erase_ratio_<0.99)
+        if(map_point_erase_ratio_<0.80)
         {
             // TODO map is too large, remove some one
             map_point_erase_ratio_ += (1.0-map_point_erase_ratio_)/4.0;
@@ -1195,7 +1199,7 @@ void VisualOdometry::globalBundleAdjustment()
 
     long unsigned int maxKFid = 0;
     long unsigned int minKFid = 999999;
-    int deltaf = 5;
+    int deltaf = 6;
 
     for(auto iter = map_->keyframes_.begin(); iter != map_->keyframes_.end();iter++)
     {
