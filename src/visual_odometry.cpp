@@ -806,7 +806,7 @@ void VisualOdometry::triangulation()
 
         if(state_ == INITIALIZING)
         {
-            if(error_cur<max_mean_view_error_triangulation_/10&&error_ref<max_mean_view_error_triangulation_/10)
+            if(angleRad>min_view_angle_triangulation_init_&&error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
             {
                 tiangulation_points_good_[i]=true;
                 triangulation_point_angle_enough_num_++;
@@ -1167,7 +1167,7 @@ void VisualOdometry::optimizeMap()
             continue;
         }
 
-        if ( match_ratio < 0.3 )
+        if ( match_ratio < 0.2 )
         {
             iter = map_->map_points_.erase(iter);
             continue;
