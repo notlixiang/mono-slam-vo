@@ -125,7 +125,7 @@ int main ( int argc, char** argv )
 
         cv::circle(traj, cv::Point(draw_x, draw_y), 1, CV_RGB(255, 0, 0), 2);
 
-        cv::rectangle(traj, cv::Point(10, 30), cv::Point(580, 60), CV_RGB(0, 0, 0), CV_FILLED);
+//        cv::rectangle(traj, cv::Point(10, 30), cv::Point(580, 60), CV_RGB(0, 0, 0), CV_FILLED);
         cv::imshow("Trajectory", traj);
 
 
@@ -148,7 +148,7 @@ int main ( int argc, char** argv )
         {
             myslam::MapPoint::Ptr p = pt.second;
             Vector2d pixel = pFrame->camera_->world2pixel ( p->pos_, pFrame->T_c_w_ );
-            cv::circle ( img_show, cv::Point2f ( pixel ( 0,0 ),pixel ( 1,0 ) ), 3, cv::Scalar ( 0,255,0 ), 1 );
+            cv::circle ( img_show, cv::Point2f ( pixel ( 0,0 ),pixel ( 1,0 ) ), 1, cv::Scalar (0 ,100,255 ), 2 );
         }
 
         cv::imshow ( "image", img_show );
