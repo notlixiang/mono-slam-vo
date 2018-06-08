@@ -731,7 +731,7 @@ void VisualOdometry::triangulation()
     double mean_view_angle=0;
     triangulation_point_angle_enough_num_=0;
 
-    double densityRatio=10.0;
+    double densityRatio=8.0;
 
     Mat PositionTable = Mat::zeros(ref_->color_.cols/densityRatio,ref_->color_.rows/densityRatio, CV_8UC1);
     cout<<"PositionTable.size : "<<PositionTable.size<<endl;
@@ -796,10 +796,10 @@ void VisualOdometry::triangulation()
         }
         else
         {
-            if(l1+l2>30)
-            {
-                continue;
-            }
+//            if(l1+l2>30)
+//            {
+//                continue;
+//            }
 
 //            if(angleRad>min_view_angle_triangulation_&&error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
 //            if((error_ref*error_cur/pow(angleRad,3.2))<max_mean_view_error_triangulation_*max_mean_view_error_triangulation_/pow(min_view_angle_triangulation_,3.2))
