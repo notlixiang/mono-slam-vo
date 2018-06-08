@@ -100,7 +100,7 @@ bool VisualOdometry::addFrame ( Frame::Ptr frame )
 
             addMapPointsTriangulation();
             addKeyFrame();      // the success init frame is a key-frame
-            globalBundleAdjustment();
+//            globalBundleAdjustment();
             ref_ = frame;
             cout<<"--------------------------------------------------------------------------"
                <<"Initialization finished !"
@@ -730,6 +730,12 @@ void VisualOdometry::triangulation()
     double mean_error_cur=0;
     double mean_view_angle=0;
     triangulation_point_angle_enough_num_=0;
+
+    double densityRatio=10.0;
+
+    Mat PositionTable = Mat::zeros(ref_->color_.cols/densityRatio,ref_->color_.rows/densityRatio, CV_8UC1);
+    cout<<"PositionTable.size : "<<PositionTable.size<<endl;
+
     for ( int i=0; i<good_matches_2d2d_.size(); i++ )
     {
         Eigen::Vector3d ptworld= Eigen::Vector3d( tiangulation_points_buff_[i].x, tiangulation_points_buff_[i].y, tiangulation_points_buff_[i].z );
@@ -790,7 +796,7 @@ void VisualOdometry::triangulation()
         }
         else
         {
-            if(l1>9.5||l2>9.5)
+            if(l1+l2>30)
             {
                 continue;
             }
@@ -800,8 +806,12 @@ void VisualOdometry::triangulation()
 //            {
                 if(error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
                 {
+                    if(PositionTable.at<uchar>(keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.x/densityRatio,keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.y/densityRatio)==0)
+                    {
                     tiangulation_points_good_[i]=true;
                     triangulation_point_angle_enough_num_++;
+                    PositionTable.at<uchar>(keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.x/densityRatio,keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.y/densityRatio)=1;
+                    }
                 }
 //            }
         }
@@ -843,21 +853,27 @@ bool VisualOdometry::checkEstimatedPose()
     Vector3d rot = d.tail<3>();
     cout<<"rot.norm() : "<<rot.norm()<<endl;
     cout<<"trans.norm() : "<<trans.norm()<<endl;
-    if ( d.norm() > 0.3+0.2*(num_lost_+1) )
-    {
-        cout<<"reject because motion is too large: " <<endl;
-        return false;
-    }
 
-//    if ( rot.norm() > 0.1 )
+
+        if ( rot.norm() > 0.5 )
+        {
+            cout<<"reject because rot is too large: " <<endl;
+            return false;
+        }
+
+        if ( trans.norm() >1.0 )
+        {
+            cout<<"reject because trans is too large: " <<endl;
+            return false;
+        }
+
+//    if ( d.norm() > 0.3+0.2*(num_lost_+1) )
 //    {
-//        return true;
+//        cout<<"reject because motion is too large: " <<endl;
+//        return false;
 //    }
 
-//    if ( trans.norm() >0.05 )
-//    {
-//        return true;
-//    }
+
 
     // check if the estimated pose is good
     if ( num_inliers_ < min_inliers_ )
@@ -1151,7 +1167,7 @@ void VisualOdometry::optimizeMap()
     //addMapPoints();
     if ( map_->map_points_.size() > max_map_points_ )
     {
-        if(map_point_erase_ratio_<0.75)
+        if(map_point_erase_ratio_<0.99)
         {
             // TODO map is too large, remove some one
             map_point_erase_ratio_ += (1.0-map_point_erase_ratio_)/4.0;
@@ -1159,7 +1175,7 @@ void VisualOdometry::optimizeMap()
     }
     else
     {
-        if(map_point_erase_ratio_>0.3)
+        if(map_point_erase_ratio_>0.34)
         {
             map_point_erase_ratio_ = map_point_erase_ratio_/1.2;
         }
@@ -1179,7 +1195,7 @@ void VisualOdometry::globalBundleAdjustment()
 
     long unsigned int maxKFid = 0;
     long unsigned int minKFid = 999999;
-    int deltaf = 25;
+    int deltaf = 5;
 
     for(auto iter = map_->keyframes_.begin(); iter != map_->keyframes_.end();iter++)
     {
@@ -1268,7 +1284,7 @@ void VisualOdometry::globalBundleAdjustment()
     }
 
     optimizer.initializeOptimization();
-    optimizer.optimize(500);
+    optimizer.optimize(1000);
 
 
     for(auto iter = map_->keyframes_.begin(); iter != map_->keyframes_.end();iter++)
@@ -1279,7 +1295,7 @@ void VisualOdometry::globalBundleAdjustment()
         g2o::SE3Quat SE3quat = vSE3->estimate();
         f->T_c_w_= Sophus::SE3(SE3quat.rotation(),SE3quat.translation());
 
-        //        cout<<"T_c_w_ : "<<endl<<f->T_c_w_.matrix()<<endl;
+//                cout<<"T_c_w_ : "<<endl<<f->T_c_w_.matrix()<<endl;
     }
 
     for(auto iter = map_->map_points_.begin(); iter != map_->map_points_.end();iter++)
@@ -1289,6 +1305,18 @@ void VisualOdometry::globalBundleAdjustment()
         pMP->pos_=vPoint->estimate();
         //        pMP->UpdateWorldPos(Convert::toCvMat(vPoint->estimate()));
     }
+
+
+auto iter = map_->keyframes_.find(ref_->id_);
+  if ( iter == map_->keyframes_.end() )
+  {
+      cout<<"frame error"<<endl;
+  }else {
+      Frame::Ptr f= iter->second;
+      ref_->T_c_w_= f->T_c_w_;
+  }
+
+
     sleep(0.001);
     //    cout<<"T_c_w_estimated_: "<<endl<<T_c_w_estimated_.matrix()<<endl;
 
