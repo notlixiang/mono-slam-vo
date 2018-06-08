@@ -801,7 +801,7 @@ void VisualOdometry::triangulation()
                 continue;
             }
 
-//            if(angleRad>min_view_angle_triangulation_&&error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
+//             if(angleRad>min_view_angle_triangulation_&&error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
 //            if((error_ref*error_cur/pow(angleRad,3.2))<max_mean_view_error_triangulation_*max_mean_view_error_triangulation_/pow(min_view_angle_triangulation_,3.2))
 //            {
                 if(error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
