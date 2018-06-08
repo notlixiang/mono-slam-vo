@@ -1148,7 +1148,6 @@ void VisualOdometry::optimizeMap()
             continue;
         }
 
-
         //        double angle = getViewAngle( curr_, iter->second );
         //        if ( angle > M_PI/6. )
         //        {
