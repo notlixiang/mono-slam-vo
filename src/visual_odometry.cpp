@@ -796,14 +796,14 @@ void VisualOdometry::triangulation()
             }
 
 //            if(angleRad>min_view_angle_triangulation_&&error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
-            if((error_ref*error_cur/pow(angleRad,3.2))<max_mean_view_error_triangulation_*max_mean_view_error_triangulation_/pow(min_view_angle_triangulation_,3.2))
-            {
+//            if((error_ref*error_cur/pow(angleRad,3.2))<max_mean_view_error_triangulation_*max_mean_view_error_triangulation_/pow(min_view_angle_triangulation_,3.2))
+//            {
                 if(error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
                 {
                     tiangulation_points_good_[i]=true;
                     triangulation_point_angle_enough_num_++;
                 }
-            }
+//            }
         }
 //        cout<<"mean_view_angle : "<<mean_view_angle<<" angleRad : "<<angleRad<<" error_ref : "<<error_ref<<" error_cur : "<<error_cur<<"l1 l2 d : "<<l1<<" "<<l2<<" "<<d<<endl;
         mean_view_angle=(mean_view_angle*i+angleRad )/(i+1);
@@ -839,11 +839,26 @@ bool VisualOdometry::checkEstimatedPose()
     Sophus::Vector6d d = T_r_c.log();
     cout<<"  inlier   : "<<num_inliers_<<endl;
     cout<<"  motion   : "<<d.norm() <<endl;
-    if ( d.norm() > 1.5+0.5*(num_lost_+1) )
+    Vector3d trans = d.head<3>();
+    Vector3d rot = d.tail<3>();
+    cout<<"rot.norm() : "<<rot.norm()<<endl;
+    cout<<"trans.norm() : "<<trans.norm()<<endl;
+    if ( d.norm() > 0.3+0.2*(num_lost_+1) )
     {
         cout<<"reject because motion is too large: " <<endl;
         return false;
     }
+
+//    if ( rot.norm() > 0.1 )
+//    {
+//        return true;
+//    }
+
+//    if ( trans.norm() >0.05 )
+//    {
+//        return true;
+//    }
+
     // check if the estimated pose is good
     if ( num_inliers_ < min_inliers_ )
     {
@@ -905,8 +920,6 @@ bool VisualOdometry::checkKeyFrame()
     Sophus::Vector6d d = T_r_c.log();
     Vector3d trans = d.head<3>();
     Vector3d rot = d.tail<3>();
-    cout<<"rot.norm() : "<<rot.norm()<<endl;
-    cout<<"trans.norm() : "<<trans.norm()<<endl;
     if ( d.norm() > 1.0 )//-----------------------------------------------------------------------/////////////////////////////////////////////////////
     {
         return true;
@@ -1166,7 +1179,7 @@ void VisualOdometry::globalBundleAdjustment()
 
     long unsigned int maxKFid = 0;
     long unsigned int minKFid = 999999;
-    int deltaf = 10;
+    int deltaf = 25;
 
     for(auto iter = map_->keyframes_.begin(); iter != map_->keyframes_.end();iter++)
     {
@@ -1220,6 +1233,7 @@ void VisualOdometry::globalBundleAdjustment()
             Frame* ff = iter->second->observed_frames_[j];
             for(auto iter_point_ptr = ff->matched_map_points_.begin(); iter_point_ptr != map_->map_points_.end();iter_point_ptr++)
             {
+//                cout<<"ff->id_ : "<<ff->id_<<endl;
                 if(iter_point_ptr->second->id_ == pMP->id_)//此关键帧观测到的点
                 {
                     Eigen::Matrix<double,2,1> obs ;
