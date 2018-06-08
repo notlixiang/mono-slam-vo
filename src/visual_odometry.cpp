@@ -806,7 +806,7 @@ void VisualOdometry::triangulation()
 
         if(state_ == INITIALIZING)
         {
-            if(angleRad>min_view_angle_triangulation_init_&&error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
+            if(error_cur<max_mean_view_error_triangulation_/10&&error_ref<max_mean_view_error_triangulation_/10)
             {
                 tiangulation_points_good_[i]=true;
                 triangulation_point_angle_enough_num_++;
@@ -914,6 +914,7 @@ bool VisualOdometry::checkEstimatedInitPose()
     }
     // check if the estimated pose is good
     cout<<"Init checkEstimatedInitPose num_inliers_2d2d_: "<<num_inliers_2d2d_<<endl;
+    cout<<"match_2dkp_index_ref_.size() : "<<match_2dkp_index_ref_.size()<<endl;
     if ( num_inliers_2d2d_ < match_2dkp_index_ref_.size()*num_inliers_2d2d_ratio_ )
     {
         cout<<"Init rejected because inlier is too small: "<<num_inliers_2d2d_<<endl;
