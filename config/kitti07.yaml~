@@ -23,7 +23,7 @@ num_inliers_2d2d_ratio: 0.7
 min_view_angle_triangulation_init: 0.15
 min_view_angle_triangulation: 0.1
 max_init_frame_refresh_num: 100
-max_mean_view_error_triangulation: 1
+max_mean_view_error_triangulation: 0.1
 keyframe_rotation: 0.01
 keyframe_translation: 0.01
 map_point_erase_ratio: 0.1

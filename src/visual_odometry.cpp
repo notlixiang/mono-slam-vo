@@ -136,14 +136,24 @@ bool VisualOdometry::addFrame ( Frame::Ptr frame )
         curr_ = frame;
         //        curr_=ref_;
         curr_->T_c_w_ = ref_->T_c_w_;
+        boost::timer timer;
         extractKeyPoints();
+        cout<<"extractKeyPoints cost time : "<<timer.elapsed()<<endl;
+        timer.restart();
         computeDescriptors();
+        cout<<"computeDescriptors cost time  : "<<timer.elapsed()<<endl;
+        timer.restart();
         featureMatching();
+        cout<<"featureMatching cost time  : "<<timer.elapsed()<<endl;
+        timer.restart();
         poseEstimationPnP();
+        cout<<"poseEstimationPnP cost time  : "<<timer.elapsed()<<endl;
         if ( checkEstimatedPose() == true ) // a good estimation
         {
             curr_->T_c_w_ = T_c_w_estimated_;
+            timer.restart();
             optimizeMap();
+            cout<<"optimizeMap cost time  : "<<timer.elapsed()<<endl;
             num_lost_ = 0;
             if ( checkKeyFrame() == true ) // is a key-frame
             {
@@ -151,13 +161,21 @@ bool VisualOdometry::addFrame ( Frame::Ptr frame )
                 //                optimizeMap();
                 extractKeyPointsRef();//prepare for initialization
                 computeDescriptorsRef();
+                timer.restart();
                 featureMatching2d2d();
+                cout<<"featureMatching2d2d cost time  : "<<timer.elapsed()<<endl;
+                timer.restart();
                 triangulation();
                 //                waitKey();
+                cout<<"triangulation cost time  : "<<timer.elapsed()<<endl;
+                timer.restart();
                 addMapPointsTriangulation();
                 //                                removeMultiPoints();
+                cout<<"addMapPointsTriangulation cost time  : "<<timer.elapsed()<<endl;
+                timer.restart();
                 addKeyFrame();
                 globalBundleAdjustment();
+                cout<<"globalBundleAdjustment cost time  : "<<timer.elapsed()<<endl;
             }
         }
         else // bad estimation due to various reasons
@@ -300,7 +318,7 @@ void VisualOdometry::computeDescriptorsRef()
 
 void VisualOdometry::featureMatching2d2d()
 {
-    boost::timer timer;
+//    boost::timer timer;
     vector<cv::DMatch> matches;
     // select the candidates in map
     //    Mat desp_map;
@@ -346,21 +364,21 @@ void VisualOdometry::featureMatching2d2d()
             }
         }
 
-        if(good_matches_2d2d_.size()<100)
-        {
-            match_2dkp_index_ref_.clear();
-            match_2dkp_index_curr_.clear();
-            good_matches_2d2d_.clear();
-            for ( cv::DMatch& m : matches )
-            {
-                if ( m.distance < max<float> ( min_dis*match_ratio_, max_matching_distance_*1.5 ) )
-                {
-                    good_matches_2d2d_.push_back(m);
-                    match_2dkp_index_ref_.push_back( m.queryIdx );
-                    match_2dkp_index_curr_.push_back( m.trainIdx );
-                }
-            }
-        }
+//        if(good_matches_2d2d_.size()<100)
+//        {
+//            match_2dkp_index_ref_.clear();
+//            match_2dkp_index_curr_.clear();
+//            good_matches_2d2d_.clear();
+//            for ( cv::DMatch& m : matches )
+//            {
+//                if ( m.distance < max<float> ( min_dis*match_ratio_, max_matching_distance_*1.5 ) )
+//                {
+//                    good_matches_2d2d_.push_back(m);
+//                    match_2dkp_index_ref_.push_back( m.queryIdx );
+//                    match_2dkp_index_curr_.push_back( m.trainIdx );
+//                }
+//            }
+//        }
 
     }
     else
@@ -400,7 +418,7 @@ void VisualOdometry::featureMatching2d2d()
 //    imshow("matches", ShowMatches);
 
     cout<<"good matches 2d2d: "<<match_2dkp_index_ref_.size() <<endl;
-    cout<<"match cost time 2d2d: "<<timer.elapsed() <<endl;
+//    cout<<"match cost time 2d2d: "<<timer.elapsed() <<endl;
 }
 
 

@@ -26,7 +26,7 @@ level_pyramid: 4
 match_ratio: 2.0
 max_num_lost: 20
 min_inliers: 20
-min_inliers_2d2d: 30
+min_inliers_2d2d: 50
 min_good_matches: 30
 num_inliers_2d2d_ratio: 0.6
 min_view_angle_triangulation_init: 0.01
