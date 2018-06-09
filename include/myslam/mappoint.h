@@ -41,7 +41,8 @@ public:
     
     int         matched_times_;     // being an inliner in pose estimation
     int         visible_times_;     // being visible in current frame 
-    
+    int         unmatched_times_;     // being visible in current frame
+
     MapPoint();
     MapPoint( 
         unsigned long id, 

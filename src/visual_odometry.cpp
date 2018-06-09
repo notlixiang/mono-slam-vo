@@ -761,6 +761,7 @@ void VisualOdometry::poseEstimationPnP()
         optimizer.addEdge ( edge );
         // set the inlier map points
         match_3dpts_[index]->matched_times_++;
+        match_3dpts_[index]->unmatched_times_=0;
         match_3dpts_[index]->descriptor_= descriptors_curr_.row( match_2dkp_index_[index]).clone();
         //        cout<<"match_3dpts_[index]->matched_times_ : "<<match_3dpts_[index]->matched_times_<<"  "<<match_3dpts_[index]->visible_times_<<endl;
     }
@@ -1319,6 +1320,20 @@ void VisualOdometry::optimizeMap()
             iter = map_->map_points_.erase(iter);
             continue;
         }
+
+//        if ( iter->second->matched_times_ > 15 )
+//        {
+//            iter = map_->map_points_.erase(iter);
+//            continue;
+//        }
+
+        if ( iter->second->unmatched_times_ >4 )
+        {
+            iter = map_->map_points_.erase(iter);
+            continue;
+        }
+iter->second->unmatched_times_++;
+
         //        double angle = getViewAngle( curr_, iter->second );
         //        if ( angle > M_PI/6. )
         //        {
