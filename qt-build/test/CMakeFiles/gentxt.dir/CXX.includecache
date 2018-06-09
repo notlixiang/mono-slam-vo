@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-../include/myslam/camera.h
-myslam/common_include.h
-../include/myslam/myslam/common_include.h
-
 ../include/myslam/common_include.h
 Eigen/Core
 -
@@ -44,34 +40,6 @@ thread
 myslam/common_include.h
 ../include/myslam/myslam/common_include.h
 
-../include/myslam/frame.h
-myslam/common_include.h
-../include/myslam/myslam/common_include.h
-myslam/camera.h
-../include/myslam/myslam/camera.h
-myslam/mappoint.h
-../include/myslam/myslam/mappoint.h
-
-../include/myslam/map.h
-myslam/common_include.h
-../include/myslam/myslam/common_include.h
-myslam/frame.h
-../include/myslam/myslam/frame.h
-myslam/mappoint.h
-../include/myslam/myslam/mappoint.h
-
-../include/myslam/mappoint.h
-myslam/common_include.h
-../include/myslam/myslam/common_include.h
-
-../include/myslam/visual_odometry.h
-myslam/common_include.h
-../include/myslam/myslam/common_include.h
-myslam/map.h
-../include/myslam/myslam/map.h
-opencv2/features2d/features2d.hpp
--
-
 /home/null/slam/mono-slam-git/mono-slam-vo/test/gentxt.cpp
 fstream
 -
@@ -87,8 +55,8 @@ opencv2/imgproc/imgproc.hpp
 -
 myslam/config.h
 /home/null/slam/mono-slam-git/mono-slam-vo/test/myslam/config.h
-myslam/visual_odometry.h
-/home/null/slam/mono-slam-git/mono-slam-vo/test/myslam/visual_odometry.h
+myslam/common_include.h
+/home/null/slam/mono-slam-git/mono-slam-vo/test/myslam/common_include.h
 
 /home/null/slam/slambook-master/3rdparty/Sophus/sophus/se3.h
 so3.h
@@ -1495,10 +1463,6 @@ opencv2/core.hpp
 /usr/local/include/opencv2/opencv2/core.hpp
 opencv2/flann/miniflann.hpp
 /usr/local/include/opencv2/opencv2/flann/miniflann.hpp
-
-/usr/local/include/opencv2/features2d/features2d.hpp
-opencv2/features2d.hpp
-/usr/local/include/opencv2/features2d/opencv2/features2d.hpp
 
 /usr/local/include/opencv2/flann.hpp
 opencv2/core.hpp

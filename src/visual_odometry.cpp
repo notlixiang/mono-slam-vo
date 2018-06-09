@@ -1468,8 +1468,42 @@ double VisualOdometry::angleRadFromAcos(double l1,double l2,double d)
 {
     return acos((l1*l1+l2*l2-d*d)/(2*l1*l2));
 }
-void *VisualOdometry::ptrGlobalBundleAdjustment()
+//void VisualOdometry::ptrGlobalBundleAdjustment()
+//{
+//    globalBundleAdjustment();
+//}
+
+void VisualOdometry::featureTracking(cv::Mat image_ref, cv::Mat image_cur,
+    std::vector<cv::Point2f>& px_ref, std::vector<cv::Point2f>& px_cur, std::vector<double>& disparities)
 {
-    globalBundleAdjustment();
+    const double klt_win_size = 21.0;
+    const int klt_max_iter = 30;
+    const double klt_eps = 0.001;
+    std::vector<uchar> status;
+    std::vector<float> error;
+    std::vector<float> min_eig_vec;
+    cv::TermCriteria termcrit(cv::TermCriteria::COUNT + cv::TermCriteria::EPS, klt_max_iter, klt_eps);
+    cv::calcOpticalFlowPyrLK(image_ref, image_cur,
+        px_ref, px_cur,
+        status, error,
+        cv::Size2i(klt_win_size, klt_win_size),
+        4, termcrit, 0);
+
+    std::vector<cv::Point2f>::iterator px_ref_it = px_ref.begin();
+    std::vector<cv::Point2f>::iterator px_cur_it = px_cur.begin();
+    disparities.clear(); disparities.reserve(px_cur.size());
+    for (size_t i = 0; px_ref_it != px_ref.end(); ++i)
+    {
+        if (!status[i])
+        {
+            px_ref_it = px_ref.erase(px_ref_it);
+            px_cur_it = px_cur.erase(px_cur_it);
+            continue;
+        }
+        disparities.push_back(norm(cv::Point2d(px_ref_it->x - px_cur_it->x, px_ref_it->y - px_cur_it->y)));
+        ++px_ref_it;
+        ++px_cur_it;
+    }
 }
+
 }

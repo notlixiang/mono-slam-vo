@@ -71,6 +71,8 @@ myslam/map.h
 ../include/myslam/myslam/map.h
 opencv2/features2d/features2d.hpp
 -
+opencv2/opencv.hpp
+-
 
 /home/null/slam/mono-slam-git/mono-slam-vo/test/run_vo.cpp
 fstream

@@ -7,7 +7,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 
 #include "myslam/config.h"
-#include "myslam/visual_odometry.h"
+#include "myslam/common_include.h"
 
 int num_pic=5000;
 

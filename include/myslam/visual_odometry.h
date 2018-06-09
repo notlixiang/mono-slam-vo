@@ -24,6 +24,7 @@
 #include "myslam/map.h"
 
 #include <opencv2/features2d/features2d.hpp>
+#include <opencv2/opencv.hpp>
 
 namespace myslam 
 {
@@ -136,9 +137,11 @@ protected:
     double length3d(double x,double y,double z);
     double angleRadFromAcos(double l1,double l2,double d);
     void addMapPointsTriangulation();
+    void featureTracking(cv::Mat image_ref, cv::Mat image_cur,
+        std::vector<cv::Point2f>& px_ref, std::vector<cv::Point2f>& px_cur, std::vector<double>& disparities);
 void globalBundleAdjustment();
 void removeMultiPoints();
-void *ptrGlobalBundleAdjustment();
+//void *ptrGlobalBundleAdjustment();
 };
 }
 
