@@ -9,11 +9,11 @@
 #include "myslam/config.h"
 #include "myslam/visual_odometry.h"
 
-int num_pic=2100;
+int num_pic=5000;
 
 int main ( int argc, char** argv )
 {
-string filepath = "/home/null/slam/slam_dataset/kitti/00/";
+string filepath = "/home/null/slam/slam_dataset/kitti/07/";
 string outfilename = "rgb.txt";
 string timefilename = "times.txt";
 ofstream txtgenerator;
