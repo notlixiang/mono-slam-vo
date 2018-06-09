@@ -315,12 +315,12 @@ void VisualOdometry::extractKeyPoints()
 
 
     Mat Keypoints_Curr_Show_;
-//    cout<<"keypoints_part1_.size() : "<<keypoints_part1_.size()
-//       <<"keypoints_part2_.size() : "<<keypoints_part2_.size()
-//      <<"keypoints_part3_.size() : "<<keypoints_part3_.size()
-//     <<"keypoints_part4_.size() : "<<keypoints_part4_.size()<<endl;
+    //    cout<<"keypoints_part1_.size() : "<<keypoints_part1_.size()
+    //       <<"keypoints_part2_.size() : "<<keypoints_part2_.size()
+    //      <<"keypoints_part3_.size() : "<<keypoints_part3_.size()
+    //     <<"keypoints_part4_.size() : "<<keypoints_part4_.size()<<endl;
     drawKeypoints(curr_->color_,keypoints_curr_,Keypoints_Curr_Show_,Scalar(0 ,100,255 ));
-    imshow("Keypoints_Curr_Show_", Keypoints_Curr_Show_);
+    //    imshow("Keypoints_Curr_Show_", Keypoints_Curr_Show_);
 }
 
 void VisualOdometry::computeDescriptors()
@@ -541,12 +541,10 @@ void VisualOdometry::featureMatching2d2d()
         //        }
     }
 
-    Mat ShowMatches;
-    drawMatches(ref_->color_,keypoints_ref_, curr_->color_,keypoints_curr_,good_matches_2d2d_,ShowMatches);
-    imshow("matches", ShowMatches);
-
-    cout<<"good matches 2d2d: "<<match_2dkp_index_ref_.size() <<endl;
-    //    cout<<"match cost time 2d2d: "<<timer.elapsed() <<endl;
+    //    Mat ShowMatches;
+    //    drawMatches(ref_->color_,keypoints_ref_, curr_->color_,keypoints_curr_,good_matches_2d2d_,ShowMatches);
+    //    imshow("matches", ShowMatches);
+    //    cout<<"good matches 2d2d: "<<match_2dkp_index_ref_.size() <<endl;
 }
 
 
@@ -877,10 +875,6 @@ void VisualOdometry::triangulation()
     double mean_view_angle=0;
     triangulation_point_angle_enough_num_=0;
 
-    double densityRatio=4.0;
-
-    Mat PositionTable = Mat::zeros(ref_->color_.cols/densityRatio,ref_->color_.rows/densityRatio, CV_8UC1);
-    cout<<"PositionTable.size : "<<PositionTable.size<<endl;
 
     //    vector<cv::KeyPoint>    good_tri_keypoints_ref_,good_tri_keypoints_curr_;
     vector<cv::DMatch> good_tri_matches_2d2d_;
@@ -956,9 +950,7 @@ void VisualOdometry::triangulation()
             //            {
             if(error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
             {
-                //                    cout<<"error_cur : "<<error_cur<<" error_cur : "<<error_cur<<endl;
-                if(PositionTable.at<uchar>(keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.x/densityRatio,keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.y/densityRatio)==0)
-                {
+
                     tiangulation_points_good_[i]=true;
                     triangulation_point_angle_enough_num_++;
 
@@ -966,12 +958,6 @@ void VisualOdometry::triangulation()
                     //                    good_tri_keypoints_curr_.push_back(keypoints_curr_[ good_matches_2d2d_[i].trainIdx ]);
                     good_tri_matches_2d2d_.push_back(good_matches_2d2d_[i]);
 
-                    PositionTable.at<uchar>(keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.x/densityRatio,keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.y/densityRatio)=1;
-                }
-                else
-                {
-                    cout<<"Points too near"<<endl;
-                }
             }
             else
             {
@@ -996,11 +982,8 @@ void VisualOdometry::triangulation()
     cout<<"triangulation_point_angle_enough_num_ : "<<triangulation_point_angle_enough_num_<<endl;
 
     Mat ShowMatches;
-//    cout<<"good_tri_keypoints_ref_.size() : "<<good_tri_keypoints_ref_.size()
-//       <<"good_tri_keypoints_curr_.size() : "<<good_tri_keypoints_curr_.size()
-//      <<"good_tri_matches_2d2d_.size() : "<<good_tri_matches_2d2d_.size()<<endl;
     drawMatches(ref_->color_,keypoints_ref_, curr_->color_,keypoints_curr_,good_tri_matches_2d2d_,ShowMatches);
-    imshow("matches", ShowMatches);
+    imshow("triangulation matches", ShowMatches);
 
     //    points_ref.clear();
     //    points_curr.clear();
@@ -1220,12 +1203,12 @@ void VisualOdometry::addMapPointsTriangulation()
         //            matched2d2d[index] = true;
         int NewPointsNum=0;
 
+        double densityRatio=16.0;
+        Mat PositionTable = Mat::zeros(ref_->color_.cols/densityRatio,ref_->color_.rows/densityRatio, CV_8UC1);
+        cout<<"PositionTable.size : "<<PositionTable.size<<endl;
+
         for ( int i=0; i<good_matches_2d2d_.size(); i++ )
         {
-            //            if ( matched3d2d[i] == true )
-            //                continue;
-            //            if ( matched2d2d[i] == false )
-            //                continue;
             if(tiangulation_points_good_[i]==true)
             {
                 vector<int>::iterator ret;
@@ -1233,6 +1216,7 @@ void VisualOdometry::addMapPointsTriangulation()
                 if(ret != match_2dkp_index_.end())
                 {
                     //                    cout<<"Point already in map"<<endl;
+                    PositionTable.at<uchar>(keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.x/densityRatio,keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.y/densityRatio)=1;
                     continue;
                 }
                 else{
@@ -1241,22 +1225,32 @@ void VisualOdometry::addMapPointsTriangulation()
                         Vector2d ( keypoints_curr_[i].pt.x, keypoints_curr_[i].pt.y ),
                         curr_->T_c_w_, d
                         );*/
-                    if(curr_->isDepthPositive(p_world))
+                    if(PositionTable.at<uchar>(keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.x/densityRatio,keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.y/densityRatio)==0)
                     {
-                        Vector3d n = p_world - ref_->getCamCenter();
-                        n.normalize();
-                        MapPoint::Ptr map_point = MapPoint::createMapPoint(
-                                    p_world, n, descriptors_curr_.row(good_matches_2d2d_[i].trainIdx).clone(), curr_.get()
-                                    );
+                        if(curr_->isDepthPositive(p_world))
+                        {
+                            Vector3d n = p_world - ref_->getCamCenter();
+                            n.normalize();
+                            MapPoint::Ptr map_point = MapPoint::createMapPoint(
+                                        p_world, n, descriptors_curr_.row(good_matches_2d2d_[i].trainIdx).clone(), curr_.get()
+                                        );
 
-                        //                    cout<<tiangulation_points_buff_[i]<<endl;//结果输出
-                        map_->insertMapPoint( map_point );
-                        //                    ref_->insertFramePoint(map_point);
-                        //                    curr_->insertFramePoint(map_point);
-                        ref_->insertFramePoint(map_point,keypoints_ref_[good_matches_2d2d_[i].queryIdx].pt);
-                        curr_->insertFramePoint(map_point,keypoints_curr_[good_matches_2d2d_[i].trainIdx].pt);
-                        NewPointsNum++;
+                            //                    cout<<tiangulation_points_buff_[i]<<endl;//结果输出
+                            map_->insertMapPoint( map_point );
+                            //                    ref_->insertFramePoint(map_point);
+                            //                    curr_->insertFramePoint(map_point);
+                            ref_->insertFramePoint(map_point,keypoints_ref_[good_matches_2d2d_[i].queryIdx].pt);
+                            curr_->insertFramePoint(map_point,keypoints_curr_[good_matches_2d2d_[i].trainIdx].pt);
+                            NewPointsNum++;
+
+                            PositionTable.at<uchar>(keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.x/densityRatio,keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.y/densityRatio)=1;
+                        }
                     }
+                    else
+                    {
+//                        cout<<"Points too near"<<endl;
+                    }
+
                 }
             }
         }
@@ -1343,7 +1337,7 @@ void VisualOdometry::optimizeMap()
     //addMapPoints();
     if ( map_->map_points_.size() > max_map_points_ )
     {
-        if(map_point_erase_ratio_<0.80)
+        if(map_point_erase_ratio_<0.9)
         {
             // TODO map is too large, remove some one
             map_point_erase_ratio_ += (1.0-map_point_erase_ratio_)/4.0;
@@ -1371,7 +1365,7 @@ void VisualOdometry::globalBundleAdjustment()
 
     long unsigned int maxKFid = 0;
     long unsigned int minKFid = 999999;
-    int deltaf = 6;
+    int deltaf = 20;
 
     for(auto iter = map_->keyframes_.begin(); iter != map_->keyframes_.end();iter++)
     {
