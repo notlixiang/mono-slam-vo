@@ -100,7 +100,7 @@ bool VisualOdometry::addFrame ( Frame::Ptr frame )
 
             addMapPointsTriangulation();
             addKeyFrame();      // the success init frame is a key-frame
-//            globalBundleAdjustment();
+            //            globalBundleAdjustment();
             ref_ = frame;
             cout<<"--------------------------------------------------------------------------"
                <<"Initialization finished !"
@@ -127,6 +127,8 @@ bool VisualOdometry::addFrame ( Frame::Ptr frame )
             break;
         }
         ref_ = frame;
+        extractKeyPointsRef();//prepare for initialization
+        computeDescriptorsRef();
         init_cnt_frame=0;
         break;
     }
@@ -210,11 +212,11 @@ void VisualOdometry::extractKeyPoints()
 {
 
     boost::timer timer;
-int col_0_4=0;
-int col_1_4=int(curr_->color_.cols*1/4);
-int col_2_4=int(curr_->color_.cols*2/4);
-int col_3_4=int(curr_->color_.cols*3/4);
-int col_4_4=int(curr_->color_.cols*4/4);
+    int col_0_4=0;
+    int col_1_4=int(curr_->color_.cols*1/4);
+    int col_2_4=int(curr_->color_.cols*2/4);
+    int col_3_4=int(curr_->color_.cols*3/4);
+    int col_4_4=int(curr_->color_.cols*4/4);
 
     Mat part1= curr_->color_.colRange(col_0_4,col_1_4).clone();
     Mat part2= curr_->color_.colRange(col_1_4,col_2_4).clone();
@@ -234,6 +236,11 @@ int col_4_4=int(curr_->color_.cols*4/4);
 
     keypoints_curr_.clear();
 
+    for(auto point:keypoints_part1_)
+    {
+        point.pt.x+=col_0_4;
+        keypoints_curr_.push_back(point);
+    }
     for(auto point:keypoints_part2_)
     {
         point.pt.x+=col_1_4;
@@ -252,6 +259,14 @@ int col_4_4=int(curr_->color_.cols*4/4);
 
     cout<<"extract keypoints cost time: "<<timer.elapsed() <<endl;
     cout<<"keypoints_curr_.size() : "<<keypoints_curr_.size()<<endl;
+
+
+    Mat Keypoints_Curr_Show_;
+//    cout<<"good_tri_keypoints_ref_.size() : "<<good_tri_keypoints_ref_.size()
+//       <<"good_tri_keypoints_curr_.size() : "<<good_tri_keypoints_curr_.size()
+//      <<"good_tri_matches_2d2d_.size() : "<<good_tri_matches_2d2d_.size()<<endl;
+    drawKeypoints(curr_->color_,keypoints_curr_,Keypoints_Curr_Show_,Scalar(255,0,0));
+    imshow("Keypoints_Curr_Show_", Keypoints_Curr_Show_);
 }
 
 void VisualOdometry::computeDescriptors()
@@ -271,40 +286,44 @@ void VisualOdometry::extractKeyPointsRef()
     int col_3_4=int(ref_->color_.cols*3/4);
     int col_4_4=int(ref_->color_.cols*4/4);
 
-        Mat part1= ref_->color_.colRange(col_0_4,col_1_4).clone();
-        Mat part2= ref_->color_.colRange(col_1_4,col_2_4).clone();
-        Mat part3= ref_->color_.colRange(col_2_4,col_3_4).clone();
-        Mat part4= ref_->color_.colRange(col_3_4,col_4_4).clone();
+    Mat part1= ref_->color_.colRange(col_0_4,col_1_4).clone();
+    Mat part2= ref_->color_.colRange(col_1_4,col_2_4).clone();
+    Mat part3= ref_->color_.colRange(col_2_4,col_3_4).clone();
+    Mat part4= ref_->color_.colRange(col_3_4,col_4_4).clone();
 
-        vector<cv::KeyPoint>    keypoints_part1_;    // keypoints in current frame
-        vector<cv::KeyPoint>    keypoints_part2_;
-        vector<cv::KeyPoint>    keypoints_part3_;
-        vector<cv::KeyPoint>    keypoints_part4_;
+    vector<cv::KeyPoint>    keypoints_part1_;    // keypoints in current frame
+    vector<cv::KeyPoint>    keypoints_part2_;
+    vector<cv::KeyPoint>    keypoints_part3_;
+    vector<cv::KeyPoint>    keypoints_part4_;
 
-        orb_->detect ( part1, keypoints_part1_ );
-        orb_->detect ( part2, keypoints_part2_ );
-        orb_->detect ( part3, keypoints_part3_ );
-        orb_->detect ( part4, keypoints_part4_ );
+    orb_->detect ( part1, keypoints_part1_ );
+    orb_->detect ( part2, keypoints_part2_ );
+    orb_->detect ( part3, keypoints_part3_ );
+    orb_->detect ( part4, keypoints_part4_ );
 
 
-        keypoints_ref_.clear();
-
-        for(auto point:keypoints_part2_)
-        {
-            point.pt.x+=col_1_4;
-            keypoints_ref_.push_back(point);
-        }
-        for(auto point:keypoints_part3_)
-        {
-            point.pt.x+=col_2_4;
-            keypoints_ref_.push_back(point);
-        }
-        for(auto point:keypoints_part4_)
-        {
-            point.pt.x+=col_3_4;
-            keypoints_ref_.push_back(point);
-        }
-//    orb_->detect ( ref_->color_, keypoints_ref_ );
+    keypoints_ref_.clear();
+    for(auto point:keypoints_part1_)
+    {
+        point.pt.x+=col_0_4;
+        keypoints_ref_.push_back(point);
+    }
+    for(auto point:keypoints_part2_)
+    {
+        point.pt.x+=col_1_4;
+        keypoints_ref_.push_back(point);
+    }
+    for(auto point:keypoints_part3_)
+    {
+        point.pt.x+=col_2_4;
+        keypoints_ref_.push_back(point);
+    }
+    for(auto point:keypoints_part4_)
+    {
+        point.pt.x+=col_3_4;
+        keypoints_ref_.push_back(point);
+    }
+    //    orb_->detect ( ref_->color_, keypoints_ref_ );
     cout<<"extract keypoints cost time: "<<timer.elapsed() <<endl;
 }
 
@@ -318,7 +337,7 @@ void VisualOdometry::computeDescriptorsRef()
 
 void VisualOdometry::featureMatching2d2d()
 {
-//    boost::timer timer;
+    //    boost::timer timer;
     vector<cv::DMatch> matches;
     // select the candidates in map
     //    Mat desp_map;
@@ -364,21 +383,21 @@ void VisualOdometry::featureMatching2d2d()
             }
         }
 
-//        if(good_matches_2d2d_.size()<100)
-//        {
-//            match_2dkp_index_ref_.clear();
-//            match_2dkp_index_curr_.clear();
-//            good_matches_2d2d_.clear();
-//            for ( cv::DMatch& m : matches )
-//            {
-//                if ( m.distance < max<float> ( min_dis*match_ratio_, max_matching_distance_*1.5 ) )
-//                {
-//                    good_matches_2d2d_.push_back(m);
-//                    match_2dkp_index_ref_.push_back( m.queryIdx );
-//                    match_2dkp_index_curr_.push_back( m.trainIdx );
-//                }
-//            }
-//        }
+        //        if(good_matches_2d2d_.size()<100)
+        //        {
+        //            match_2dkp_index_ref_.clear();
+        //            match_2dkp_index_curr_.clear();
+        //            good_matches_2d2d_.clear();
+        //            for ( cv::DMatch& m : matches )
+        //            {
+        //                if ( m.distance < max<float> ( min_dis*match_ratio_, max_matching_distance_*1.5 ) )
+        //                {
+        //                    good_matches_2d2d_.push_back(m);
+        //                    match_2dkp_index_ref_.push_back( m.queryIdx );
+        //                    match_2dkp_index_curr_.push_back( m.trainIdx );
+        //                }
+        //            }
+        //        }
 
     }
     else
@@ -396,29 +415,29 @@ void VisualOdometry::featureMatching2d2d()
             }
         }
 
-//        if(good_matches_2d2d_.size()<100)
-//        {
-//            match_2dkp_index_ref_.clear();
-//            match_2dkp_index_curr_.clear();
-//            good_matches_2d2d_.clear();
-//            for ( cv::DMatch& m : matches )
-//            {
-//                if ( m.distance < max<float> ( min_dis*match_ratio_, max_matching_distance_*1.5 ) )
-//                {
-//                    good_matches_2d2d_.push_back(m);
-//                    match_2dkp_index_ref_.push_back( m.queryIdx );
-//                    match_2dkp_index_curr_.push_back( m.trainIdx );
-//                }
-//            }
-//        }
+        //        if(good_matches_2d2d_.size()<100)
+        //        {
+        //            match_2dkp_index_ref_.clear();
+        //            match_2dkp_index_curr_.clear();
+        //            good_matches_2d2d_.clear();
+        //            for ( cv::DMatch& m : matches )
+        //            {
+        //                if ( m.distance < max<float> ( min_dis*match_ratio_, max_matching_distance_*1.5 ) )
+        //                {
+        //                    good_matches_2d2d_.push_back(m);
+        //                    match_2dkp_index_ref_.push_back( m.queryIdx );
+        //                    match_2dkp_index_curr_.push_back( m.trainIdx );
+        //                }
+        //            }
+        //        }
     }
 
-//    Mat ShowMatches;
-//    drawMatches(ref_->color_,keypoints_ref_, curr_->color_,keypoints_curr_,good_matches_2d2d_,ShowMatches);
-//    imshow("matches", ShowMatches);
+    Mat ShowMatches;
+    drawMatches(ref_->color_,keypoints_ref_, curr_->color_,keypoints_curr_,good_matches_2d2d_,ShowMatches);
+    imshow("matches", ShowMatches);
 
     cout<<"good matches 2d2d: "<<match_2dkp_index_ref_.size() <<endl;
-//    cout<<"match cost time 2d2d: "<<timer.elapsed() <<endl;
+    //    cout<<"match cost time 2d2d: "<<timer.elapsed() <<endl;
 }
 
 
@@ -622,7 +641,7 @@ void VisualOdometry::poseEstimationPnP()
     // edges
     for ( int i=0; i<inliers.rows; i++ )
     {
-//        cout<<inliers.row(i)<<endl;
+        //        cout<<inliers.row(i)<<endl;
         int index = inliers.at<int> ( i,0 );
         // 3D -> 2D projection
         EdgeProjectXYZ2UVPoseOnly* edge = new EdgeProjectXYZ2UVPoseOnly();
@@ -636,7 +655,7 @@ void VisualOdometry::poseEstimationPnP()
         // set the inlier map points
         match_3dpts_[index]->matched_times_++;
         match_3dpts_[index]->descriptor_= descriptors_curr_.row( match_2dkp_index_[index]).clone();
-//        cout<<"match_3dpts_[index]->matched_times_ : "<<match_3dpts_[index]->matched_times_<<"  "<<match_3dpts_[index]->visible_times_<<endl;
+        //        cout<<"match_3dpts_[index]->matched_times_ : "<<match_3dpts_[index]->matched_times_<<"  "<<match_3dpts_[index]->visible_times_<<endl;
     }
 
     optimizer.initializeOptimization();
@@ -675,8 +694,8 @@ void VisualOdometry::triangulation()
               //            R[2,0], R[2,1], R[2,2], t[2,0]
               );
 
-//cout<<"T1 : "<<endl<<T1<<endl;
-//cout<<"T2 : "<<endl<<T2<<endl;
+    //cout<<"T1 : "<<endl<<T1<<endl;
+    //cout<<"T2 : "<<endl<<T2<<endl;
 
     Mat K = ( cv::Mat_<double> ( 3,3 ) <<
               ref_->camera_->fx_, 0, ref_->camera_->cx_,
@@ -720,7 +739,7 @@ void VisualOdometry::triangulation()
     //    }
 
 
-//    cout<<"points_ref.size() : "<<points_ref.size()<<endl;
+    //    cout<<"points_ref.size() : "<<points_ref.size()<<endl;
     //调用opencv函数进行三角化
     Mat pts_4d;
     cv::triangulatePoints( T1, T2, points_ref, points_curr, pts_4d );
@@ -749,20 +768,23 @@ void VisualOdometry::triangulation()
     double mean_view_angle=0;
     triangulation_point_angle_enough_num_=0;
 
-    double densityRatio=8.0;
+    double densityRatio=4.0;
 
     Mat PositionTable = Mat::zeros(ref_->color_.cols/densityRatio,ref_->color_.rows/densityRatio, CV_8UC1);
     cout<<"PositionTable.size : "<<PositionTable.size<<endl;
+
+    //    vector<cv::KeyPoint>    good_tri_keypoints_ref_,good_tri_keypoints_curr_;
+    vector<cv::DMatch> good_tri_matches_2d2d_;
 
     for ( int i=0; i<good_matches_2d2d_.size(); i++ )
     {
         Eigen::Vector3d ptworld= Eigen::Vector3d( tiangulation_points_buff_[i].x, tiangulation_points_buff_[i].y, tiangulation_points_buff_[i].z );
 
         Point2d pt1_cam = ref_->camera_->pixel2cam( keypoints_ref_[ good_matches_2d2d_[i].queryIdx ].pt);
-//        Point2d pt1_cam_3d(
-//                    tiangulation_points_buff_[i].x/tiangulation_points_buff_[i].z,
-//                    tiangulation_points_buff_[i].y/tiangulation_points_buff_[i].z
-//                    );
+        //        Point2d pt1_cam_3d(
+        //                    tiangulation_points_buff_[i].x/tiangulation_points_buff_[i].z,
+        //                    tiangulation_points_buff_[i].y/tiangulation_points_buff_[i].z
+        //                    );
 
         Eigen::Vector3d pt1_trans = ref_->T_c_w_.rotation_matrix()*( ptworld) + ref_->T_c_w_.translation();
 
@@ -794,15 +816,16 @@ void VisualOdometry::triangulation()
 
         //double d=T_c_w_estimated_.translation().norm();
         double d=length3d( T_c_w_estimated_.translation()(0)-ref_->T_c_w_.translation()(0), T_c_w_estimated_.translation()(1)-ref_->T_c_w_.translation()(1), T_c_w_estimated_.translation()(2)-ref_->T_c_w_.translation()(2));
-//        cout<<"l1 l2 d : "<<l1<<" "<<l2<<" "<<d<<endl;
+        //        cout<<"l1 l2 d : "<<l1<<" "<<l2<<" "<<d<<endl;
         double angleRad=angleRadFromAcos(l1,l2,d);
 
         if(!(angleRad>0&&angleRad<2))
         {
-         continue;
+            continue;
         }
 
         //        cout<<"error_cur : "<<error_cur<<"error_ref : "<<error_ref<<endl;
+
 
         if(state_ == INITIALIZING)
         {
@@ -814,26 +837,40 @@ void VisualOdometry::triangulation()
         }
         else
         {
-//            if(l1+l2>30)
-//            {
-//                continue;
-//            }
+            //            if(l1+l2>30)
+            //            {
+            //                continue;
+            //            }
 
-//            if(angleRad>min_view_angle_triangulation_&&error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
-//            if((error_ref*error_cur/pow(angleRad,3.2))<max_mean_view_error_triangulation_*max_mean_view_error_triangulation_/pow(min_view_angle_triangulation_,3.2))
-//            {
-                if(error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
+            //            if(angleRad>min_view_angle_triangulation_&&error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
+            //            if((error_ref*error_cur/pow(angleRad,3.2))<max_mean_view_error_triangulation_*max_mean_view_error_triangulation_/pow(min_view_angle_triangulation_,3.2))
+            //            {
+            if(error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
+            {
+                //                    cout<<"error_cur : "<<error_cur<<" error_cur : "<<error_cur<<endl;
+                if(PositionTable.at<uchar>(keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.x/densityRatio,keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.y/densityRatio)==0)
                 {
-                    if(PositionTable.at<uchar>(keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.x/densityRatio,keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.y/densityRatio)==0)
-                    {
                     tiangulation_points_good_[i]=true;
                     triangulation_point_angle_enough_num_++;
+
+                    //                    good_tri_keypoints_ref_.push_back(keypoints_curr_[ good_matches_2d2d_[i].queryIdx ]);
+                    //                    good_tri_keypoints_curr_.push_back(keypoints_curr_[ good_matches_2d2d_[i].trainIdx ]);
+                    good_tri_matches_2d2d_.push_back(good_matches_2d2d_[i]);
+
                     PositionTable.at<uchar>(keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.x/densityRatio,keypoints_curr_[ good_matches_2d2d_[i].trainIdx ].pt.y/densityRatio)=1;
-                    }
                 }
-//            }
+                else
+                {
+                    cout<<"Points too near"<<endl;
+                }
+            }
+            else
+            {
+                cout<<"Error too large error_cur : "<<error_cur<<" error_cur : "<<error_cur<<endl;
+            }
+            //            }
         }
-//        cout<<"mean_view_angle : "<<mean_view_angle<<" angleRad : "<<angleRad<<" error_ref : "<<error_ref<<" error_cur : "<<error_cur<<"l1 l2 d : "<<l1<<" "<<l2<<" "<<d<<endl;
+        //        cout<<"mean_view_angle : "<<mean_view_angle<<" angleRad : "<<angleRad<<" error_ref : "<<error_ref<<" error_cur : "<<error_cur<<"l1 l2 d : "<<l1<<" "<<l2<<" "<<d<<endl;
         mean_view_angle=(mean_view_angle*i+angleRad )/(i+1);
         //cout<<" T_c_w_estimated_.translation()(0) "<<T_c_w_estimated_.translation()(0)<<" (1) "<<T_c_w_estimated_.translation()(1)<<" (2) "<<T_c_w_estimated_.translation()(2)<<endl;
         //cout<<" l1 "<<l1<<" l2 "<<l2<<" d "<<d<<endl;
@@ -848,6 +885,13 @@ void VisualOdometry::triangulation()
     mean_view_angle_triangulation_=mean_view_angle;
     cout<<" mean_error_ref  :  "<<mean_error_ref<<" mean_error_cur  :  "<<mean_error_cur<<" mean_view_angle  :   "<<mean_view_angle<<endl;
     cout<<"triangulation_point_angle_enough_num_ : "<<triangulation_point_angle_enough_num_<<endl;
+
+    Mat ShowMatches;
+//    cout<<"good_tri_keypoints_ref_.size() : "<<good_tri_keypoints_ref_.size()
+//       <<"good_tri_keypoints_curr_.size() : "<<good_tri_keypoints_curr_.size()
+//      <<"good_tri_matches_2d2d_.size() : "<<good_tri_matches_2d2d_.size()<<endl;
+    drawMatches(ref_->color_,keypoints_ref_, curr_->color_,keypoints_curr_,good_tri_matches_2d2d_,ShowMatches);
+    imshow("matches", ShowMatches);
 
     //    points_ref.clear();
     //    points_curr.clear();
@@ -873,23 +917,23 @@ bool VisualOdometry::checkEstimatedPose()
     cout<<"trans.norm() : "<<trans.norm()<<endl;
 
 
-        if ( rot.norm() > 0.5 )
-        {
-            cout<<"reject because rot is too large: " <<endl;
-            return false;
-        }
+    if ( rot.norm() > 0.5 )
+    {
+        cout<<"reject because rot is too large: " <<endl;
+        return false;
+    }
 
-        if ( trans.norm() >1.0 )
-        {
-            cout<<"reject because trans is too large: " <<endl;
-            return false;
-        }
+    if ( trans.norm() >1.0 )
+    {
+        cout<<"reject because trans is too large: " <<endl;
+        return false;
+    }
 
-//    if ( d.norm() > 0.3+0.2*(num_lost_+1) )
-//    {
-//        cout<<"reject because motion is too large: " <<endl;
-//        return false;
-//    }
+    //    if ( d.norm() > 0.3+0.2*(num_lost_+1) )
+    //    {
+    //        cout<<"reject because motion is too large: " <<endl;
+    //        return false;
+    //    }
 
 
 
@@ -1107,7 +1151,7 @@ void VisualOdometry::addMapPointsTriangulation()
                 }
             }
         }
-    cout<<"NewPointsNum : "<<endl;
+        cout<<"NewPointsNum : "<<endl;
     }
 }
 
@@ -1246,7 +1290,7 @@ void VisualOdometry::globalBundleAdjustment()
         vSE3->setId(f->id_);
         vSE3->setFixed(f->id_==minKFid);
         optimizer.addVertex(vSE3);
-//        cout<<"f->id_ : "<<f->id_<<endl;
+        //        cout<<"f->id_ : "<<f->id_<<endl;
         //        }
 
         //            cout<<"T_c_w_ : "<<endl<<f->T_c_w_.matrix()<<endl;
@@ -1272,7 +1316,7 @@ void VisualOdometry::globalBundleAdjustment()
             Frame* ff = iter->second->observed_frames_[j];
             for(auto iter_point_ptr = ff->matched_map_points_.begin(); iter_point_ptr != map_->map_points_.end();iter_point_ptr++)
             {
-//                cout<<"ff->id_ : "<<ff->id_<<endl;
+                //                cout<<"ff->id_ : "<<ff->id_<<endl;
                 if(iter_point_ptr->second->id_ == pMP->id_)//此关键帧观测到的点
                 {
                     Eigen::Matrix<double,2,1> obs ;
@@ -1318,7 +1362,7 @@ void VisualOdometry::globalBundleAdjustment()
         g2o::SE3Quat SE3quat = vSE3->estimate();
         f->T_c_w_= Sophus::SE3(SE3quat.rotation(),SE3quat.translation());
 
-//                cout<<"T_c_w_ : "<<endl<<f->T_c_w_.matrix()<<endl;
+        //                cout<<"T_c_w_ : "<<endl<<f->T_c_w_.matrix()<<endl;
     }
 
     for(auto iter = map_->map_points_.begin(); iter != map_->map_points_.end();iter++)
@@ -1330,14 +1374,14 @@ void VisualOdometry::globalBundleAdjustment()
     }
 
 
-auto iter = map_->keyframes_.find(ref_->id_);
-  if ( iter == map_->keyframes_.end() )
-  {
-      cout<<"frame error"<<endl;
-  }else {
-      Frame::Ptr f= iter->second;
-      ref_->T_c_w_= f->T_c_w_;
-  }
+    auto iter = map_->keyframes_.find(ref_->id_);
+    if ( iter == map_->keyframes_.end() )
+    {
+        cout<<"frame error"<<endl;
+    }else {
+        Frame::Ptr f= iter->second;
+        ref_->T_c_w_= f->T_c_w_;
+    }
 
 
     sleep(0.001);
@@ -1474,7 +1518,7 @@ double VisualOdometry::angleRadFromAcos(double l1,double l2,double d)
 //}
 
 void VisualOdometry::featureTracking(cv::Mat image_ref, cv::Mat image_cur,
-    std::vector<cv::Point2f>& px_ref, std::vector<cv::Point2f>& px_cur, std::vector<double>& disparities)
+                                     std::vector<cv::Point2f>& px_ref, std::vector<cv::Point2f>& px_cur, std::vector<double>& disparities)
 {
     const double klt_win_size = 21.0;
     const int klt_max_iter = 30;
@@ -1484,10 +1528,10 @@ void VisualOdometry::featureTracking(cv::Mat image_ref, cv::Mat image_cur,
     std::vector<float> min_eig_vec;
     cv::TermCriteria termcrit(cv::TermCriteria::COUNT + cv::TermCriteria::EPS, klt_max_iter, klt_eps);
     cv::calcOpticalFlowPyrLK(image_ref, image_cur,
-        px_ref, px_cur,
-        status, error,
-        cv::Size2i(klt_win_size, klt_win_size),
-        4, termcrit, 0);
+                             px_ref, px_cur,
+                             status, error,
+                             cv::Size2i(klt_win_size, klt_win_size),
+                             4, termcrit, 0);
 
     std::vector<cv::Point2f>::iterator px_ref_it = px_ref.begin();
     std::vector<cv::Point2f>::iterator px_cur_it = px_cur.begin();
