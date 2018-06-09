@@ -806,7 +806,7 @@ void VisualOdometry::triangulation()
 
         if(state_ == INITIALIZING)
         {
-            if(angleRad>min_view_angle_triangulation_init_&&error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
+            if(/*angleRad>min_view_angle_triangulation_init_&&*/error_cur<max_mean_view_error_triangulation_&&error_ref<max_mean_view_error_triangulation_)
             {
                 tiangulation_points_good_[i]=true;
                 triangulation_point_angle_enough_num_++;
