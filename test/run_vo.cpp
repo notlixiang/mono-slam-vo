@@ -130,12 +130,18 @@ int main ( int argc, char** argv )
         cv::imshow("Trajectory", traj);
 
 
-        slam_log<<Twc.log().transpose()(0)<<" ";
-        slam_log<<Twc.log().transpose()(1)<<" ";
-        slam_log<<Twc.log().transpose()(2)<<" ";
-        slam_log<<Twc.log().transpose()(3)<<" ";
-        slam_log<<Twc.log().transpose()(4)<<" ";
-        slam_log<<Twc.log().transpose()(5)<<" ";
+        slam_log<<Twc.translation()(0)<<" ";
+        slam_log<<Twc.translation()(1)<<" ";
+        slam_log<<Twc.translation()(2)<<" ";
+        slam_log<<Twc.rotation_matrix()(0,0)<<" ";
+        slam_log<<Twc.rotation_matrix()(0,1)<<" ";
+        slam_log<<Twc.rotation_matrix()(0,2)<<" ";
+        slam_log<<Twc.rotation_matrix()(1,0)<<" ";
+        slam_log<<Twc.rotation_matrix()(1,1)<<" ";
+        slam_log<<Twc.rotation_matrix()(1,2)<<" ";
+        slam_log<<Twc.rotation_matrix()(2,0)<<" ";
+        slam_log<<Twc.rotation_matrix()(2,1)<<" ";
+        slam_log<<Twc.rotation_matrix()(2,2)<<" ";
         slam_log<<endl;
 
         // show the map and the camera pose
