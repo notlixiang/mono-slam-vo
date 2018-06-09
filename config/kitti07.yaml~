@@ -11,21 +11,22 @@ camera.cy: 1.831104000000e+02
 camera.depth_scale: 5000
 
 # VO Parameters
-number_of_features: 500
+number_of_features: 1000
 scale_factor: 1.2
-level_pyramid: 5
+level_pyramid: 4
 match_ratio: 2.0
 max_num_lost: 20
-min_inliers: 10
+min_inliers: 20
 min_inliers_2d2d: 30
 min_good_matches: 30
-num_inliers_2d2d_ratio: 0.7
-min_view_angle_triangulation_init: 0.15
-min_view_angle_triangulation: 0.1
-max_init_frame_refresh_num: 100
-max_mean_view_error_triangulation: 0.1
-keyframe_rotation: 0.01
-keyframe_translation: 0.01
+num_inliers_2d2d_ratio: 0.6
+min_view_angle_triangulation_init: 0.05
+min_view_angle_triangulation: 0.04
+max_init_frame_refresh_num: 10
+max_mean_view_error_triangulation: 0.0005
+keyframe_rotation: 0.02
+keyframe_translation: 0.02
 map_point_erase_ratio: 0.1
 min_triangulation_point_angle_enough_num: 30
-max_matching_distance: 40.0
+max_matching_distance: 42.0
+max_map_points:500

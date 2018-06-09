@@ -89,8 +89,8 @@ int main ( int argc, char** argv )
 
     world_coor.setRenderingProperty ( cv::viz::LINE_WIDTH, 2.0 );
     camera_coor.setRenderingProperty ( cv::viz::LINE_WIDTH, 1.0 );
-//    vis.showWidget ( "World", world_coor );
-//    vis.showWidget ( "Camera", camera_coor );
+    //    vis.showWidget ( "World", world_coor );
+    //    vis.showWidget ( "Camera", camera_coor );
 
     cout<<"read total "<<rgb_files.size() <<" entries"<<endl;
     vo->init_cnt_frame=0;
@@ -126,11 +126,17 @@ int main ( int argc, char** argv )
 
         cv::circle(traj, cv::Point(draw_x, draw_y), 1, CV_RGB(255, 0, 0), 2);
 
-//        cv::rectangle(traj, cv::Point(10, 30), cv::Point(580, 60), CV_RGB(0, 0, 0), CV_FILLED);
+        //        cv::rectangle(traj, cv::Point(10, 30), cv::Point(580, 60), CV_RGB(0, 0, 0), CV_FILLED);
         cv::imshow("Trajectory", traj);
 
 
-        slam_log<<Twc.log().transpose()<<endl;
+        slam_log<<Twc.log().transpose()(0)<<" ";
+        slam_log<<Twc.log().transpose()(1)<<" ";
+        slam_log<<Twc.log().transpose()(2)<<" ";
+        slam_log<<Twc.log().transpose()(3)<<" ";
+        slam_log<<Twc.log().transpose()(4)<<" ";
+        slam_log<<Twc.log().transpose()(5)<<" ";
+        slam_log<<endl;
 
         // show the map and the camera pose
         cv::Affine3d M (
@@ -154,8 +160,8 @@ int main ( int argc, char** argv )
 
         cv::imshow ( "image", img_show );
         cv::waitKey ( 1 );
-//        vis.setWidgetPose ( "Camera", M );
-//        vis.spinOnce ( 1, false );
+        //        vis.setWidgetPose ( "Camera", M );
+        //        vis.spinOnce ( 1, false );
         cout<<endl;
     }
 

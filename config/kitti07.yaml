@@ -19,7 +19,7 @@ max_num_lost: 20
 min_inliers: 20
 min_inliers_2d2d: 30
 min_good_matches: 30
-num_inliers_2d2d_ratio: 0.6
+num_inliers_2d2d_ratio: 0.8
 min_view_angle_triangulation_init: 0.05
 min_view_angle_triangulation: 0.04
 max_init_frame_refresh_num: 10
