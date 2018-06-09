@@ -218,54 +218,107 @@ void VisualOdometry::extractKeyPoints()
     int col_3_4=int(curr_->color_.cols*3/4);
     int col_4_4=int(curr_->color_.cols*4/4);
 
-    Mat part1= curr_->color_.colRange(col_0_4,col_1_4).clone();
-    Mat part2= curr_->color_.colRange(col_1_4,col_2_4).clone();
-    Mat part3= curr_->color_.colRange(col_2_4,col_3_4).clone();
-    Mat part4= curr_->color_.colRange(col_3_4,col_4_4).clone();
+    int row_0_2=0;
+    int row_1_2=int(curr_->color_.rows*1/2);
+    int row_2_2=int(curr_->color_.rows*2/2);
 
-    vector<cv::KeyPoint>    keypoints_part1_;    // keypoints in current frame
-    vector<cv::KeyPoint>    keypoints_part2_;
-    vector<cv::KeyPoint>    keypoints_part3_;
-    vector<cv::KeyPoint>    keypoints_part4_;
+    int size_x=col_1_4;
+    int size_y=row_1_2;
 
-    orb_->detect ( part1, keypoints_part1_ );
-    orb_->detect ( part2, keypoints_part2_ );
-    orb_->detect ( part3, keypoints_part3_ );
-    orb_->detect ( part4, keypoints_part4_ );
+    Mat part0_0= curr_->color_(Rect(col_0_4,row_0_2,size_x,size_y)).clone();
+    Mat part1_0= curr_->color_(Rect(col_1_4,row_0_2,size_x,size_y)).clone();
+    Mat part2_0= curr_->color_(Rect(col_2_4,row_0_2,size_x,size_y)).clone();
+    Mat part3_0= curr_->color_(Rect(col_3_4,row_0_2,size_x,size_y)).clone();
 
+
+    Mat part0_1= curr_->color_(Rect(col_0_4,row_1_2,size_x,size_y)).clone();
+    Mat part1_1= curr_->color_(Rect(col_1_4,row_1_2,size_x,size_y)).clone();
+    Mat part2_1= curr_->color_(Rect(col_2_4,row_1_2,size_x,size_y)).clone();
+    Mat part3_1= curr_->color_(Rect(col_3_4,row_1_2,size_x,size_y)).clone();
+
+    vector<cv::KeyPoint>    keypoints_part0_0_;    // keypoints in current frame
+    vector<cv::KeyPoint>    keypoints_part1_0_;
+    vector<cv::KeyPoint>    keypoints_part2_0_;
+    vector<cv::KeyPoint>    keypoints_part3_0_;
+
+
+    vector<cv::KeyPoint>    keypoints_part0_1_;    // keypoints in current frame
+    vector<cv::KeyPoint>    keypoints_part1_1_;
+    vector<cv::KeyPoint>    keypoints_part2_1_;
+    vector<cv::KeyPoint>    keypoints_part3_1_;
+
+    orb_->detect ( part0_0, keypoints_part0_0_ );
+    orb_->detect ( part1_0, keypoints_part1_0_ );
+    orb_->detect ( part2_0, keypoints_part2_0_ );
+    orb_->detect ( part3_0, keypoints_part3_0_ );
+
+    orb_->detect ( part0_1, keypoints_part0_1_ );
+    orb_->detect ( part1_1, keypoints_part1_1_ );
+    orb_->detect ( part2_1, keypoints_part2_1_ );
+    orb_->detect ( part3_1, keypoints_part3_1_ );
 
     keypoints_curr_.clear();
 
-    for(auto point:keypoints_part1_)
+    for(auto point:keypoints_part0_0_)
     {
         point.pt.x+=col_0_4;
+        point.pt.y+=row_0_2;
         keypoints_curr_.push_back(point);
     }
-    for(auto point:keypoints_part2_)
+    for(auto point:keypoints_part1_0_)
     {
         point.pt.x+=col_1_4;
+        point.pt.y+=row_0_2;
         keypoints_curr_.push_back(point);
     }
-    for(auto point:keypoints_part3_)
+    for(auto point:keypoints_part2_0_)
     {
         point.pt.x+=col_2_4;
+        point.pt.y+=row_0_2;
         keypoints_curr_.push_back(point);
     }
-    for(auto point:keypoints_part4_)
+    for(auto point:keypoints_part3_0_)
     {
         point.pt.x+=col_3_4;
+        point.pt.y+=row_0_2;
         keypoints_curr_.push_back(point);
     }
+
+    for(auto point:keypoints_part0_1_)
+    {
+        point.pt.x+=col_0_4;
+        point.pt.y+=row_1_2;
+        keypoints_curr_.push_back(point);
+    }
+    for(auto point:keypoints_part1_1_)
+    {
+        point.pt.x+=col_1_4;
+        point.pt.y+=row_1_2;
+        keypoints_curr_.push_back(point);
+    }
+    for(auto point:keypoints_part2_1_)
+    {
+        point.pt.x+=col_2_4;
+        point.pt.y+=row_1_2;
+        keypoints_curr_.push_back(point);
+    }
+    for(auto point:keypoints_part3_1_)
+    {
+        point.pt.x+=col_3_4;
+        point.pt.y+=row_1_2;
+        keypoints_curr_.push_back(point);
+    }
+
 
     cout<<"extract keypoints cost time: "<<timer.elapsed() <<endl;
     cout<<"keypoints_curr_.size() : "<<keypoints_curr_.size()<<endl;
 
 
     Mat Keypoints_Curr_Show_;
-    cout<<"keypoints_part1_.size() : "<<keypoints_part1_.size()
-       <<"keypoints_part2_.size() : "<<keypoints_part2_.size()
-      <<"keypoints_part3_.size() : "<<keypoints_part3_.size()
-     <<"keypoints_part4_.size() : "<<keypoints_part4_.size()<<endl;
+//    cout<<"keypoints_part1_.size() : "<<keypoints_part1_.size()
+//       <<"keypoints_part2_.size() : "<<keypoints_part2_.size()
+//      <<"keypoints_part3_.size() : "<<keypoints_part3_.size()
+//     <<"keypoints_part4_.size() : "<<keypoints_part4_.size()<<endl;
     drawKeypoints(curr_->color_,keypoints_curr_,Keypoints_Curr_Show_,Scalar(0 ,100,255 ));
     imshow("Keypoints_Curr_Show_", Keypoints_Curr_Show_);
 }
@@ -287,45 +340,100 @@ void VisualOdometry::extractKeyPointsRef()
     int col_3_4=int(ref_->color_.cols*3/4);
     int col_4_4=int(ref_->color_.cols*4/4);
 
-    Mat part1= ref_->color_.colRange(col_0_4,col_1_4).clone();
-    Mat part2= ref_->color_.colRange(col_1_4,col_2_4).clone();
-    Mat part3= ref_->color_.colRange(col_2_4,col_3_4).clone();
-    Mat part4= ref_->color_.colRange(col_3_4,col_4_4).clone();
+    int row_0_2=0;
+    int row_1_2=int(ref_->color_.rows*1/2);
+    int row_2_2=int(ref_->color_.rows*2/2);
 
-    vector<cv::KeyPoint>    keypoints_part1_;    // keypoints in current frame
-    vector<cv::KeyPoint>    keypoints_part2_;
-    vector<cv::KeyPoint>    keypoints_part3_;
-    vector<cv::KeyPoint>    keypoints_part4_;
+    int size_x=col_1_4;
+    int size_y=row_1_2;
 
-    orb_->detect ( part1, keypoints_part1_ );
-    orb_->detect ( part2, keypoints_part2_ );
-    orb_->detect ( part3, keypoints_part3_ );
-    orb_->detect ( part4, keypoints_part4_ );
+    Mat part0_0= ref_->color_(Rect(col_0_4,row_0_2,size_x,size_y)).clone();
+    Mat part1_0= ref_->color_(Rect(col_1_4,row_0_2,size_x,size_y)).clone();
+    Mat part2_0= ref_->color_(Rect(col_2_4,row_0_2,size_x,size_y)).clone();
+    Mat part3_0= ref_->color_(Rect(col_3_4,row_0_2,size_x,size_y)).clone();
 
+
+    Mat part0_1= ref_->color_(Rect(col_0_4,row_1_2,size_x,size_y)).clone();
+    Mat part1_1= ref_->color_(Rect(col_1_4,row_1_2,size_x,size_y)).clone();
+    Mat part2_1= ref_->color_(Rect(col_2_4,row_1_2,size_x,size_y)).clone();
+    Mat part3_1= ref_->color_(Rect(col_3_4,row_1_2,size_x,size_y)).clone();
+
+    vector<cv::KeyPoint>    keypoints_part0_0_;    // keypoints in refent frame
+    vector<cv::KeyPoint>    keypoints_part1_0_;
+    vector<cv::KeyPoint>    keypoints_part2_0_;
+    vector<cv::KeyPoint>    keypoints_part3_0_;
+
+
+    vector<cv::KeyPoint>    keypoints_part0_1_;    // keypoints in refent frame
+    vector<cv::KeyPoint>    keypoints_part1_1_;
+    vector<cv::KeyPoint>    keypoints_part2_1_;
+    vector<cv::KeyPoint>    keypoints_part3_1_;
+
+    orb_->detect ( part0_0, keypoints_part0_0_ );
+    orb_->detect ( part1_0, keypoints_part1_0_ );
+    orb_->detect ( part2_0, keypoints_part2_0_ );
+    orb_->detect ( part3_0, keypoints_part3_0_ );
+
+    orb_->detect ( part0_1, keypoints_part0_1_ );
+    orb_->detect ( part1_1, keypoints_part1_1_ );
+    orb_->detect ( part2_1, keypoints_part2_1_ );
+    orb_->detect ( part3_1, keypoints_part3_1_ );
 
     keypoints_ref_.clear();
-    for(auto point:keypoints_part1_)
+
+    for(auto point:keypoints_part0_0_)
     {
         point.pt.x+=col_0_4;
+        point.pt.y+=row_0_2;
         keypoints_ref_.push_back(point);
     }
-    for(auto point:keypoints_part2_)
+    for(auto point:keypoints_part1_0_)
     {
         point.pt.x+=col_1_4;
+        point.pt.y+=row_0_2;
         keypoints_ref_.push_back(point);
     }
-    for(auto point:keypoints_part3_)
+    for(auto point:keypoints_part2_0_)
     {
         point.pt.x+=col_2_4;
+        point.pt.y+=row_0_2;
         keypoints_ref_.push_back(point);
     }
-    for(auto point:keypoints_part4_)
+    for(auto point:keypoints_part3_0_)
     {
         point.pt.x+=col_3_4;
+        point.pt.y+=row_0_2;
         keypoints_ref_.push_back(point);
     }
-    //    orb_->detect ( ref_->color_, keypoints_ref_ );
+
+    for(auto point:keypoints_part0_1_)
+    {
+        point.pt.x+=col_0_4;
+        point.pt.y+=row_1_2;
+        keypoints_ref_.push_back(point);
+    }
+    for(auto point:keypoints_part1_1_)
+    {
+        point.pt.x+=col_1_4;
+        point.pt.y+=row_1_2;
+        keypoints_ref_.push_back(point);
+    }
+    for(auto point:keypoints_part2_1_)
+    {
+        point.pt.x+=col_2_4;
+        point.pt.y+=row_1_2;
+        keypoints_ref_.push_back(point);
+    }
+    for(auto point:keypoints_part3_1_)
+    {
+        point.pt.x+=col_3_4;
+        point.pt.y+=row_1_2;
+        keypoints_ref_.push_back(point);
+    }
+
+
     cout<<"extract keypoints cost time: "<<timer.elapsed() <<endl;
+    cout<<"keypoints_ref_.size() : "<<keypoints_ref_.size()<<endl;
 }
 
 void VisualOdometry::computeDescriptorsRef()
