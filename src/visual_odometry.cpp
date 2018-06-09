@@ -234,6 +234,11 @@ int col_4_4=int(curr_->color_.cols*4/4);
 
     keypoints_curr_.clear();
 
+    for(auto point:keypoints_part1_)
+    {
+        point.pt.x+=col_0_4;
+        keypoints_curr_.push_back(point);
+    }
     for(auto point:keypoints_part2_)
     {
         point.pt.x+=col_1_4;
@@ -289,6 +294,11 @@ void VisualOdometry::extractKeyPointsRef()
 
         keypoints_ref_.clear();
 
+        for(auto point:keypoints_part1_)
+        {
+            point.pt.x+=col_0_4;
+            keypoints_ref_.push_back(point);
+        }
         for(auto point:keypoints_part2_)
         {
             point.pt.x+=col_1_4;

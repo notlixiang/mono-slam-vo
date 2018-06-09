@@ -11,7 +11,7 @@ camera.cy: 1.831104000000e+02
 camera.depth_scale: 5000
 
 # VO Parameters
-number_of_features: 980
+number_of_features: 800
 scale_factor: 1.2
 level_pyramid: 4
 match_ratio: 2.0
@@ -19,7 +19,7 @@ max_num_lost: 20
 min_inliers: 15
 min_inliers_2d2d: 30
 min_good_matches: 30
-num_inliers_2d2d_ratio: 0.8
+num_inliers_2d2d_ratio: 0.82
 min_view_angle_triangulation_init: 0.05
 min_view_angle_triangulation: 0.04
 max_init_frame_refresh_num: 10
