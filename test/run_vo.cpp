@@ -121,15 +121,15 @@ int main ( int argc, char** argv )
         double pos_x=Twc.translation()(0);
         double pos_z=Twc.translation()(2);
 
-        int draw_x = int(-pos_x*scale) + 400;
-        int draw_y = int(pos_z*scale) + 400;
+        int draw_x = int(pos_x*scale) + 400;
+        int draw_y = int(-pos_z*scale) + 400;
 
         cv::circle(traj, cv::Point(draw_x, draw_y), 1, CV_RGB(255, 0, 0), 2);
 
         //        cv::rectangle(traj, cv::Point(10, 30), cv::Point(580, 60), CV_RGB(0, 0, 0), CV_FILLED);
         cv::imshow("Trajectory", traj);
 
-
+        slam_log<<rgb_files[i]<<" ";
         slam_log<<Twc.translation()(0)<<" ";
         slam_log<<Twc.translation()(1)<<" ";
         slam_log<<Twc.translation()(2)<<" ";
