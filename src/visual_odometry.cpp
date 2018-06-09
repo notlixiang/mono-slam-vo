@@ -262,10 +262,11 @@ void VisualOdometry::extractKeyPoints()
 
 
     Mat Keypoints_Curr_Show_;
-//    cout<<"good_tri_keypoints_ref_.size() : "<<good_tri_keypoints_ref_.size()
-//       <<"good_tri_keypoints_curr_.size() : "<<good_tri_keypoints_curr_.size()
-//      <<"good_tri_matches_2d2d_.size() : "<<good_tri_matches_2d2d_.size()<<endl;
-    drawKeypoints(curr_->color_,keypoints_curr_,Keypoints_Curr_Show_,Scalar(255,0,0));
+    cout<<"keypoints_part1_.size() : "<<keypoints_part1_.size()
+       <<"keypoints_part2_.size() : "<<keypoints_part2_.size()
+      <<"keypoints_part3_.size() : "<<keypoints_part3_.size()
+     <<"keypoints_part4_.size() : "<<keypoints_part4_.size()<<endl;
+    drawKeypoints(curr_->color_,keypoints_curr_,Keypoints_Curr_Show_,Scalar(0 ,100,255 ));
     imshow("Keypoints_Curr_Show_", Keypoints_Curr_Show_);
 }
 
