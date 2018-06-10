@@ -715,7 +715,7 @@ void VisualOdometry::poseEstimationPnP()
               0,0,1
               );
     Mat rvec, tvec, inliers;
-    cv::solvePnPRansac ( pts3d, pts2d, K, Mat(), rvec, tvec, false, 100, 3.0, 0.99, inliers);
+    cv::solvePnPRansac ( pts3d, pts2d, K, Mat(), rvec, tvec, false, 300, 15.0, 0.99, inliers);
     num_inliers_ = inliers.rows;
     //    cout<<inliers<<endl;
     cout<<"pnp inliers: "<<num_inliers_<<endl;
@@ -762,7 +762,7 @@ void VisualOdometry::poseEstimationPnP()
         // set the inlier map points
         match_3dpts_[index]->matched_times_++;
         match_3dpts_[index]->unmatched_times_=0;
-        match_3dpts_[index]->descriptor_= descriptors_curr_.row( match_2dkp_index_[index]).clone();
+//        match_3dpts_[index]->descriptor_= descriptors_curr_.row( match_2dkp_index_[index]).clone();
         //        cout<<"match_3dpts_[index]->matched_times_ : "<<match_3dpts_[index]->matched_times_<<"  "<<match_3dpts_[index]->visible_times_<<endl;
     }
 
@@ -1204,7 +1204,7 @@ void VisualOdometry::addMapPointsTriangulation()
         //            matched2d2d[index] = true;
         int NewPointsNum=0;
 
-        double densityRatio=8.0;
+        double densityRatio=32;
         Mat PositionTable = Mat::zeros(ref_->color_.cols/densityRatio,ref_->color_.rows/densityRatio, CV_8UC1);
         cout<<"PositionTable.size : "<<PositionTable.size<<endl;
 
@@ -1255,7 +1255,7 @@ void VisualOdometry::addMapPointsTriangulation()
                 }
             }
         }
-        cout<<"NewPointsNum : "<<endl;
+        cout<<"NewPointsNum : "<<NewPointsNum<<endl;
     }
 }
 
@@ -1329,7 +1329,7 @@ void VisualOdometry::optimizeMap()
             continue;
         }
 
-        if ( iter->second->unmatched_times_ >4 )
+        if ( iter->second->unmatched_times_ >5 )
         {
             iter = map_->map_points_.erase(iter);
             continue;
@@ -1382,7 +1382,7 @@ void VisualOdometry::globalBundleAdjustment()
 
     long unsigned int maxKFid = 0;
     long unsigned int minKFid = 999999;
-    int deltaf = 11;
+    int deltaf = 8;
 
     for(auto iter = map_->keyframes_.begin(); iter != map_->keyframes_.end();iter++)
     {

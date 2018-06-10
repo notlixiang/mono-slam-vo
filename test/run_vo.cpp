@@ -161,7 +161,8 @@ int main ( int argc, char** argv )
         {
             myslam::MapPoint::Ptr p = pt.second;
             Vector2d pixel = pFrame->camera_->world2pixel ( p->pos_, pFrame->T_c_w_ );
-            cv::circle ( img_show, cv::Point2f ( pixel ( 0,0 ),pixel ( 1,0 ) ), 1, cv::Scalar (0 ,100,255 ), 2 );
+            float match_ratio = float(p->matched_times_)/p->visible_times_;
+            cv::circle ( img_show, cv::Point2f ( pixel ( 0,0 ),pixel ( 1,0 ) ), 1, cv::Scalar (255*(1-match_ratio) ,100,255*match_ratio ), 2 );
         }
 
         cv::imshow ( "image", img_show );
