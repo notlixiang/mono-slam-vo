@@ -315,10 +315,6 @@ void VisualOdometry::extractKeyPoints()
 
 
     Mat Keypoints_Curr_Show_;
-    //    cout<<"keypoints_part1_.size() : "<<keypoints_part1_.size()
-    //       <<"keypoints_part2_.size() : "<<keypoints_part2_.size()
-    //      <<"keypoints_part3_.size() : "<<keypoints_part3_.size()
-    //     <<"keypoints_part4_.size() : "<<keypoints_part4_.size()<<endl;
     drawKeypoints(curr_->color_,keypoints_curr_,Keypoints_Curr_Show_,Scalar(0 ,100,255 ));
     //    imshow("Keypoints_Curr_Show_", Keypoints_Curr_Show_);
 }
@@ -627,7 +623,7 @@ void VisualOdometry::poseEstimation2d2d ()
     cv::Point2f principal_point ( ref_->camera_->cx_, ref_->camera_->cy_ );	//相机光心,
     double focal_length = (ref_->camera_->fx_+ref_->camera_->fy_)/2.0;			//相机焦距,
     Mat essential_matrix;
-    essential_matrix = findEssentialMat ( points_ref, points_curr, focal_length, principal_point );
+    essential_matrix = findEssentialMat ( points_ref, points_curr, focal_length,principal_point );
     //    cout<<"essential_matrix is "<<endl<< essential_matrix<<endl;
 
     //    //-- 计算单应矩阵
@@ -715,7 +711,7 @@ void VisualOdometry::poseEstimationPnP()
               0,0,1
               );
     Mat rvec, tvec, inliers;
-    cv::solvePnPRansac ( pts3d, pts2d, K, Mat(), rvec, tvec, false, 300, 15.0, 0.99, inliers);
+    cv::solvePnPRansac ( pts3d, pts2d, K, Mat(), rvec, tvec, false, 300, 1.0, 0.99, inliers);
     num_inliers_ = inliers.rows;
     //    cout<<inliers<<endl;
     cout<<"pnp inliers: "<<num_inliers_<<endl;
@@ -984,7 +980,7 @@ void VisualOdometry::triangulation()
 
     Mat ShowMatches;
     drawMatches(ref_->color_,keypoints_ref_, curr_->color_,keypoints_curr_,good_tri_matches_2d2d_,ShowMatches);
-    imshow("triangulation matches", ShowMatches);
+//    imshow("triangulation matches", ShowMatches);
 
     //    points_ref.clear();
     //    points_curr.clear();
@@ -1204,7 +1200,7 @@ void VisualOdometry::addMapPointsTriangulation()
         //            matched2d2d[index] = true;
         int NewPointsNum=0;
 
-        double densityRatio=32;
+        double densityRatio=10;
         Mat PositionTable = Mat::zeros(ref_->color_.cols/densityRatio,ref_->color_.rows/densityRatio, CV_8UC1);
         cout<<"PositionTable.size : "<<PositionTable.size<<endl;
 
@@ -1316,18 +1312,18 @@ void VisualOdometry::optimizeMap()
             continue;
         }
 
-        if ( match_ratio < 0.2 )
+        if ( match_ratio < 0.15 )
         {
             iter = map_->map_points_.erase(iter);
             continue;
         }
 
-        if ( iter->second->matched_times_ > 10&&erase_cnt%3==0 )
-        {
-            iter = map_->map_points_.erase(iter);
-            erase_cnt++;
-            continue;
-        }
+//        if ( iter->second->matched_times_ > 30&&erase_cnt%3==0 )
+//        {
+//            iter = map_->map_points_.erase(iter);
+//            erase_cnt++;
+//            continue;
+//        }
 
         if ( iter->second->unmatched_times_ >5 )
         {
