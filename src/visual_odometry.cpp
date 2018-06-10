@@ -1228,7 +1228,7 @@ void VisualOdometry::globalBundleAdjustment()
 
     long unsigned int maxKFid = 0;
     long unsigned int minKFid = 999999;
-    int deltaf = 6;
+    int deltaf = 11;
 
     for(auto iter = map_->keyframes_.begin(); iter != map_->keyframes_.end();iter++)
     {
