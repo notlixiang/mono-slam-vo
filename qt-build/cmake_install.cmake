@@ -34,6 +34,7 @@ ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
+  INCLUDE("/home/null/slam/mono-slam-git/mono-slam-vo/qt-build/Thirdparty/g2o/cmake_install.cmake")
   INCLUDE("/home/null/slam/mono-slam-git/mono-slam-vo/qt-build/src/cmake_install.cmake")
   INCLUDE("/home/null/slam/mono-slam-git/mono-slam-vo/qt-build/test/cmake_install.cmake")
 
