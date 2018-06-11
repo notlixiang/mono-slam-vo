@@ -99,6 +99,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named g2o
+
+# Build rule for target.
+g2o: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 g2o
+.PHONY : g2o
+
+# fast build rule for target.
+g2o/fast:
+	$(MAKE) -f Thirdparty/g2o/CMakeFiles/g2o.dir/build.make Thirdparty/g2o/CMakeFiles/g2o.dir/build
+.PHONY : g2o/fast
+
+#=============================================================================
 # Target rules for targets named myslam
 
 # Build rule for target.
@@ -145,6 +158,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... g2o"
 	@echo "... myslam"
 	@echo "... gentxt"
 	@echo "... run_vo"

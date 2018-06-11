@@ -53,15 +53,15 @@ src/CMakeFiles/myslam.dir/frame.cpp.o: src/CMakeFiles/myslam.dir/flags.make
 src/CMakeFiles/myslam.dir/frame.cpp.o: ../src/frame.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/null/slam/mono-slam-git/mono-slam-vo/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object src/CMakeFiles/myslam.dir/frame.cpp.o"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/myslam.dir/frame.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/src/frame.cpp
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/myslam.dir/frame.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/src/frame.cpp
 
 src/CMakeFiles/myslam.dir/frame.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/myslam.dir/frame.cpp.i"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/src/frame.cpp > CMakeFiles/myslam.dir/frame.cpp.i
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/src/frame.cpp > CMakeFiles/myslam.dir/frame.cpp.i
 
 src/CMakeFiles/myslam.dir/frame.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/myslam.dir/frame.cpp.s"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/src/frame.cpp -o CMakeFiles/myslam.dir/frame.cpp.s
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/src/frame.cpp -o CMakeFiles/myslam.dir/frame.cpp.s
 
 src/CMakeFiles/myslam.dir/frame.cpp.o.requires:
 .PHONY : src/CMakeFiles/myslam.dir/frame.cpp.o.requires
@@ -76,15 +76,15 @@ src/CMakeFiles/myslam.dir/mappoint.cpp.o: src/CMakeFiles/myslam.dir/flags.make
 src/CMakeFiles/myslam.dir/mappoint.cpp.o: ../src/mappoint.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/null/slam/mono-slam-git/mono-slam-vo/build/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object src/CMakeFiles/myslam.dir/mappoint.cpp.o"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/myslam.dir/mappoint.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/src/mappoint.cpp
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/myslam.dir/mappoint.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/src/mappoint.cpp
 
 src/CMakeFiles/myslam.dir/mappoint.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/myslam.dir/mappoint.cpp.i"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/src/mappoint.cpp > CMakeFiles/myslam.dir/mappoint.cpp.i
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/src/mappoint.cpp > CMakeFiles/myslam.dir/mappoint.cpp.i
 
 src/CMakeFiles/myslam.dir/mappoint.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/myslam.dir/mappoint.cpp.s"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/src/mappoint.cpp -o CMakeFiles/myslam.dir/mappoint.cpp.s
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/src/mappoint.cpp -o CMakeFiles/myslam.dir/mappoint.cpp.s
 
 src/CMakeFiles/myslam.dir/mappoint.cpp.o.requires:
 .PHONY : src/CMakeFiles/myslam.dir/mappoint.cpp.o.requires
@@ -99,15 +99,15 @@ src/CMakeFiles/myslam.dir/map.cpp.o: src/CMakeFiles/myslam.dir/flags.make
 src/CMakeFiles/myslam.dir/map.cpp.o: ../src/map.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/null/slam/mono-slam-git/mono-slam-vo/build/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object src/CMakeFiles/myslam.dir/map.cpp.o"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/myslam.dir/map.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/src/map.cpp
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/myslam.dir/map.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/src/map.cpp
 
 src/CMakeFiles/myslam.dir/map.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/myslam.dir/map.cpp.i"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/src/map.cpp > CMakeFiles/myslam.dir/map.cpp.i
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/src/map.cpp > CMakeFiles/myslam.dir/map.cpp.i
 
 src/CMakeFiles/myslam.dir/map.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/myslam.dir/map.cpp.s"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/src/map.cpp -o CMakeFiles/myslam.dir/map.cpp.s
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/src/map.cpp -o CMakeFiles/myslam.dir/map.cpp.s
 
 src/CMakeFiles/myslam.dir/map.cpp.o.requires:
 .PHONY : src/CMakeFiles/myslam.dir/map.cpp.o.requires
@@ -122,15 +122,15 @@ src/CMakeFiles/myslam.dir/camera.cpp.o: src/CMakeFiles/myslam.dir/flags.make
 src/CMakeFiles/myslam.dir/camera.cpp.o: ../src/camera.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/null/slam/mono-slam-git/mono-slam-vo/build/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object src/CMakeFiles/myslam.dir/camera.cpp.o"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/myslam.dir/camera.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/src/camera.cpp
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/myslam.dir/camera.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/src/camera.cpp
 
 src/CMakeFiles/myslam.dir/camera.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/myslam.dir/camera.cpp.i"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/src/camera.cpp > CMakeFiles/myslam.dir/camera.cpp.i
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/src/camera.cpp > CMakeFiles/myslam.dir/camera.cpp.i
 
 src/CMakeFiles/myslam.dir/camera.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/myslam.dir/camera.cpp.s"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/src/camera.cpp -o CMakeFiles/myslam.dir/camera.cpp.s
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/src/camera.cpp -o CMakeFiles/myslam.dir/camera.cpp.s
 
 src/CMakeFiles/myslam.dir/camera.cpp.o.requires:
 .PHONY : src/CMakeFiles/myslam.dir/camera.cpp.o.requires
@@ -145,15 +145,15 @@ src/CMakeFiles/myslam.dir/config.cpp.o: src/CMakeFiles/myslam.dir/flags.make
 src/CMakeFiles/myslam.dir/config.cpp.o: ../src/config.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/null/slam/mono-slam-git/mono-slam-vo/build/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object src/CMakeFiles/myslam.dir/config.cpp.o"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/myslam.dir/config.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/src/config.cpp
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/myslam.dir/config.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/src/config.cpp
 
 src/CMakeFiles/myslam.dir/config.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/myslam.dir/config.cpp.i"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/src/config.cpp > CMakeFiles/myslam.dir/config.cpp.i
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/src/config.cpp > CMakeFiles/myslam.dir/config.cpp.i
 
 src/CMakeFiles/myslam.dir/config.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/myslam.dir/config.cpp.s"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/src/config.cpp -o CMakeFiles/myslam.dir/config.cpp.s
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/src/config.cpp -o CMakeFiles/myslam.dir/config.cpp.s
 
 src/CMakeFiles/myslam.dir/config.cpp.o.requires:
 .PHONY : src/CMakeFiles/myslam.dir/config.cpp.o.requires
@@ -168,15 +168,15 @@ src/CMakeFiles/myslam.dir/g2o_types.cpp.o: src/CMakeFiles/myslam.dir/flags.make
 src/CMakeFiles/myslam.dir/g2o_types.cpp.o: ../src/g2o_types.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/null/slam/mono-slam-git/mono-slam-vo/build/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object src/CMakeFiles/myslam.dir/g2o_types.cpp.o"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/myslam.dir/g2o_types.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/src/g2o_types.cpp
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/myslam.dir/g2o_types.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/src/g2o_types.cpp
 
 src/CMakeFiles/myslam.dir/g2o_types.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/myslam.dir/g2o_types.cpp.i"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/src/g2o_types.cpp > CMakeFiles/myslam.dir/g2o_types.cpp.i
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/src/g2o_types.cpp > CMakeFiles/myslam.dir/g2o_types.cpp.i
 
 src/CMakeFiles/myslam.dir/g2o_types.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/myslam.dir/g2o_types.cpp.s"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/src/g2o_types.cpp -o CMakeFiles/myslam.dir/g2o_types.cpp.s
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/src/g2o_types.cpp -o CMakeFiles/myslam.dir/g2o_types.cpp.s
 
 src/CMakeFiles/myslam.dir/g2o_types.cpp.o.requires:
 .PHONY : src/CMakeFiles/myslam.dir/g2o_types.cpp.o.requires
@@ -191,15 +191,15 @@ src/CMakeFiles/myslam.dir/visual_odometry.cpp.o: src/CMakeFiles/myslam.dir/flags
 src/CMakeFiles/myslam.dir/visual_odometry.cpp.o: ../src/visual_odometry.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/null/slam/mono-slam-git/mono-slam-vo/build/CMakeFiles $(CMAKE_PROGRESS_7)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object src/CMakeFiles/myslam.dir/visual_odometry.cpp.o"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/myslam.dir/visual_odometry.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/src/visual_odometry.cpp
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/myslam.dir/visual_odometry.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/src/visual_odometry.cpp
 
 src/CMakeFiles/myslam.dir/visual_odometry.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/myslam.dir/visual_odometry.cpp.i"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/src/visual_odometry.cpp > CMakeFiles/myslam.dir/visual_odometry.cpp.i
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/src/visual_odometry.cpp > CMakeFiles/myslam.dir/visual_odometry.cpp.i
 
 src/CMakeFiles/myslam.dir/visual_odometry.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/myslam.dir/visual_odometry.cpp.s"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/src/visual_odometry.cpp -o CMakeFiles/myslam.dir/visual_odometry.cpp.s
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/src/visual_odometry.cpp -o CMakeFiles/myslam.dir/visual_odometry.cpp.s
 
 src/CMakeFiles/myslam.dir/visual_odometry.cpp.o.requires:
 .PHONY : src/CMakeFiles/myslam.dir/visual_odometry.cpp.o.requires

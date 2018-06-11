@@ -53,15 +53,15 @@ test/CMakeFiles/run_vo.dir/run_vo.cpp.o: test/CMakeFiles/run_vo.dir/flags.make
 test/CMakeFiles/run_vo.dir/run_vo.cpp.o: ../test/run_vo.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/null/slam/mono-slam-git/mono-slam-vo/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object test/CMakeFiles/run_vo.dir/run_vo.cpp.o"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/test && g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/run_vo.dir/run_vo.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/test/run_vo.cpp
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/run_vo.dir/run_vo.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/test/run_vo.cpp
 
 test/CMakeFiles/run_vo.dir/run_vo.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/run_vo.dir/run_vo.cpp.i"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/test && g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/test/run_vo.cpp > CMakeFiles/run_vo.dir/run_vo.cpp.i
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/test/run_vo.cpp > CMakeFiles/run_vo.dir/run_vo.cpp.i
 
 test/CMakeFiles/run_vo.dir/run_vo.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/run_vo.dir/run_vo.cpp.s"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/test && g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/test/run_vo.cpp -o CMakeFiles/run_vo.dir/run_vo.cpp.s
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/build/test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/test/run_vo.cpp -o CMakeFiles/run_vo.dir/run_vo.cpp.s
 
 test/CMakeFiles/run_vo.dir/run_vo.cpp.o.requires:
 .PHONY : test/CMakeFiles/run_vo.dir/run_vo.cpp.o.requires
