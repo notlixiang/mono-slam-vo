@@ -1,7 +1,7 @@
 cmake_minimum_required( VERSION 2.8 )
 project ( my_mono_slam )
 
-set( CMAKE_CXX_COMPILER "g++" )
+#set( CMAKE_CXX_COMPILER "g++" )
 set( CMAKE_BUILD_TYPE "Release" )
 set( CMAKE_CXX_FLAGS "-std=c++11 -march=native -O3" )
 
@@ -21,6 +21,8 @@ include_directories( ${Sophus_INCLUDE_DIRS} )
 # G2O
 #find_package( G2O REQUIRED )
 #include_directories( ${G2O_INCLUDE_DIRS} )
+
+add_subdirectory( Thirdparty/g2o )
 
 set( THIRD_PARTY_LIBS 
     ${OpenCV_LIBS}

@@ -1,1 +1,0 @@
-/home/null/slam/mono-slam-git/mono-slam-vo/Thirdparty/g2o/build/CMakeFiles/g2o.dir

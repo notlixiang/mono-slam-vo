@@ -28,8 +28,8 @@ FILE(REMOVE_RECURSE
   "CMakeFiles/g2o.dir/g2o/stuff/os_specific.c.o"
   "CMakeFiles/g2o.dir/g2o/stuff/string_tools.cpp.o"
   "CMakeFiles/g2o.dir/g2o/stuff/property.cpp.o"
-  "../lib/libg2o.pdb"
-  "../lib/libg2o.so"
+  "../../../Thirdparty/g2o/lib/libg2o.pdb"
+  "../../../Thirdparty/g2o/lib/libg2o.so"
 )
 
 # Per-language clean rules from dependency scanning.

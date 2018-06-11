@@ -53,15 +53,15 @@ test/CMakeFiles/gentxt.dir/gentxt.cpp.o: test/CMakeFiles/gentxt.dir/flags.make
 test/CMakeFiles/gentxt.dir/gentxt.cpp.o: ../test/gentxt.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/null/slam/mono-slam-git/mono-slam-vo/qt-build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object test/CMakeFiles/gentxt.dir/gentxt.cpp.o"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/qt-build/test && g++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gentxt.dir/gentxt.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/test/gentxt.cpp
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/qt-build/test && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gentxt.dir/gentxt.cpp.o -c /home/null/slam/mono-slam-git/mono-slam-vo/test/gentxt.cpp
 
 test/CMakeFiles/gentxt.dir/gentxt.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gentxt.dir/gentxt.cpp.i"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/qt-build/test && g++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/test/gentxt.cpp > CMakeFiles/gentxt.dir/gentxt.cpp.i
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/qt-build/test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/null/slam/mono-slam-git/mono-slam-vo/test/gentxt.cpp > CMakeFiles/gentxt.dir/gentxt.cpp.i
 
 test/CMakeFiles/gentxt.dir/gentxt.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gentxt.dir/gentxt.cpp.s"
-	cd /home/null/slam/mono-slam-git/mono-slam-vo/qt-build/test && g++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/test/gentxt.cpp -o CMakeFiles/gentxt.dir/gentxt.cpp.s
+	cd /home/null/slam/mono-slam-git/mono-slam-vo/qt-build/test && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/null/slam/mono-slam-git/mono-slam-vo/test/gentxt.cpp -o CMakeFiles/gentxt.dir/gentxt.cpp.s
 
 test/CMakeFiles/gentxt.dir/gentxt.cpp.o.requires:
 .PHONY : test/CMakeFiles/gentxt.dir/gentxt.cpp.o.requires

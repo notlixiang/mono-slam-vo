@@ -242,10 +242,6 @@ myslam/camera.h
 myslam/config.h
 -
 
-/home/null/slam/mono-slam-git/mono-slam-vo/src/config.cpp
-myslam/config.h
-/home/null/slam/mono-slam-git/mono-slam-vo/src/myslam/config.h
-
 /home/null/slam/mono-slam-git/mono-slam-vo/src/frame.cpp
 myslam/frame.h
 /home/null/slam/mono-slam-git/mono-slam-vo/src/myslam/frame.h
