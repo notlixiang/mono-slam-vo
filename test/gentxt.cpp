@@ -13,6 +13,12 @@ int num_pic=5000;
 
 int main ( int argc, char** argv )
 {
+    if ( argc != 2 )
+    {
+        cout<<"Please enter your kitti data path"<<endl
+              <<"For example:           ./slam_dataset/kitti/07/"<<endl;
+        return 1;
+    }
 string filepath = "/home/null/slam/slam_dataset/kitti/07/";
 string outfilename = "rgb.txt";
 string timefilename = "times.txt";
