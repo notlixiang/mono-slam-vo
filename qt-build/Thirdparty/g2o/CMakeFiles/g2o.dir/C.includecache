@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/null/slam/mono-slam-git/mono-slam-vo/Thirdparty/g2o/g2o/stuff/os_specific.c
+/home/null/slam/git/mono-slam-vo/Thirdparty/g2o/g2o/stuff/os_specific.c
 os_specific.h
-/home/null/slam/mono-slam-git/mono-slam-vo/Thirdparty/g2o/g2o/stuff/os_specific.h
+/home/null/slam/git/mono-slam-vo/Thirdparty/g2o/g2o/stuff/os_specific.h
 
-/home/null/slam/mono-slam-git/mono-slam-vo/Thirdparty/g2o/g2o/stuff/os_specific.h
+/home/null/slam/git/mono-slam-vo/Thirdparty/g2o/g2o/stuff/os_specific.h
 stdio.h
 -
 stdlib.h

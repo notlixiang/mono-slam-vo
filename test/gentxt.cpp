@@ -19,7 +19,7 @@ int main ( int argc, char** argv )
               <<"For example:           ./slam_dataset/kitti/07/"<<endl;
         return 1;
     }
-string filepath = "/home/null/slam/slam_dataset/kitti/07/";
+string filepath = argv[1];
 string outfilename = "rgb.txt";
 string timefilename = "times.txt";
 ofstream txtgenerator;
