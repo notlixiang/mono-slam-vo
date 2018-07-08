@@ -27,48 +27,49 @@
 #ifndef G2O_GRAPH_PARAMETER_CONTAINER_HH_
 #define G2O_GRAPH_PARAMETER_CONTAINER_HH_
 
+#include "g2o_core_api.h"
 #include <iosfwd>
 #include <map>
 #include <string>
-#include "g2o_core_api.h"
 
 namespace g2o {
-    
-    class Parameter;
 
-    /**
-     * \brief map id to parameters
-     */
-	class G2O_CORE_API ParameterContainer : protected std::map<int, Parameter*>
-    {
-    public:
-      typedef std::map<int, Parameter*> BaseClass;
+class Parameter;
 
-      /**
-       * create a container for the parameters.
-       * @param isMainStorage_ pointers to the parameters are owned by this container, i.e., freed in its constructor
-       */
-      ParameterContainer(bool isMainStorage_=true);
-      virtual ~ParameterContainer();
-      //! add parameter to the container
-      bool addParameter(Parameter* p);
-      //! return a parameter based on its ID
-      Parameter* getParameter(int id);
-      //! remove a parameter from the container, i.e., the user now owns the pointer
-      Parameter* detachParameter(int id);
-      //! read parameters from a stream
-      virtual bool read(std::istream& is, const std::map<std::string, std::string>* renamedMap =0);
-      //! write the data to a stream
-      virtual bool write(std::ostream& os) const;
-      bool isMainStorage() const {return _isMainStorage;}
-      void clear();
+/**
+ * \brief map id to parameters
+ */
+class G2O_CORE_API ParameterContainer : protected std::map<int, Parameter *> {
+public:
+  typedef std::map<int, Parameter *> BaseClass;
 
-      // stuff of the base class that should re-appear
-      using BaseClass::size;
+  /**
+   * create a container for the parameters.
+   * @param isMainStorage_ pointers to the parameters are owned by this
+   * container, i.e., freed in its constructor
+   */
+  ParameterContainer(bool isMainStorage_ = true);
+  virtual ~ParameterContainer();
+  //! add parameter to the container
+  bool addParameter(Parameter *p);
+  //! return a parameter based on its ID
+  Parameter *getParameter(int id);
+  //! remove a parameter from the container, i.e., the user now owns the pointer
+  Parameter *detachParameter(int id);
+  //! read parameters from a stream
+  virtual bool read(std::istream &is,
+                    const std::map<std::string, std::string> *renamedMap = 0);
+  //! write the data to a stream
+  virtual bool write(std::ostream &os) const;
+  bool isMainStorage() const { return _isMainStorage; }
+  void clear();
 
-    protected:
-      bool _isMainStorage;
-    };
+  // stuff of the base class that should re-appear
+  using BaseClass::size;
+
+protected:
+  bool _isMainStorage;
+};
 
 } // end namespace
 

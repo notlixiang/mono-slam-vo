@@ -11,11 +11,11 @@ os_specific.h
 /home/null/slam/git/mono-slam-vo/Thirdparty/g2o/g2o/stuff/os_specific.h
 
 /home/null/slam/git/mono-slam-vo/Thirdparty/g2o/g2o/stuff/os_specific.h
+stdarg.h
+-
 stdio.h
 -
 stdlib.h
--
-stdarg.h
 -
 sys/time.h
 -

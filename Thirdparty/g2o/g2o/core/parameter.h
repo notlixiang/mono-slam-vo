@@ -29,28 +29,30 @@
 
 #include <iosfwd>
 
-#include "hyper_graph.h"
 #include "g2o_core_api.h"
+#include "hyper_graph.h"
 
 namespace g2o {
 
-	class G2O_CORE_API Parameter : public HyperGraph::HyperGraphElement
-    {
-      public:
-        Parameter();
-        virtual ~Parameter() {};
-        //! read the data from a stream
-        virtual bool read(std::istream& is) = 0;
-        //! write the data to a stream
-        virtual bool write(std::ostream& os) const = 0;
-        int id() const {return _id;}
-        void setId(int id_);
-        virtual HyperGraph::HyperGraphElementType elementType() const { return HyperGraph::HGET_PARAMETER;}
-      protected:
-        int _id;
-    };
+class G2O_CORE_API Parameter : public HyperGraph::HyperGraphElement {
+public:
+  Parameter();
+  virtual ~Parameter(){};
+  //! read the data from a stream
+  virtual bool read(std::istream &is) = 0;
+  //! write the data to a stream
+  virtual bool write(std::ostream &os) const = 0;
+  int id() const { return _id; }
+  void setId(int id_);
+  virtual HyperGraph::HyperGraphElementType elementType() const {
+    return HyperGraph::HGET_PARAMETER;
+  }
 
-    typedef std::vector<Parameter*> ParameterVector;
+protected:
+  int _id;
+};
+
+typedef std::vector<Parameter *> ParameterVector;
 
 } // end namespace
 

@@ -17,17 +17,17 @@
 
 #ifdef G2O_SHARED_LIBS
 #ifdef G2O_EXPORT
-	#define G2O_CORE_API __declspec(dllexport)
+#define G2O_CORE_API __declspec(dllexport)
 #else
-	#define G2O_CORE_API __declspec(dllimport)
+#define G2O_CORE_API __declspec(dllimport)
 #endif
 #else
 #define G2O_CORE_API
 #endif
 
 #else
-	// Not Microsoft compiler so set empty definition:
-	#define G2O_CORE_API
+// Not Microsoft compiler so set empty definition:
+#define G2O_CORE_API
 #endif
 
 #endif // G2O_CORE_API_H
